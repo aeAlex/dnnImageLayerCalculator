@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'widgets/convLayerCard.dart';
 import 'widgets/maxPoolLayer.dart';
 import 'widgets/inputImageCard.dart';
+import 'widgets/newLayerSubScreen.dart';
+import 'widgets/dismissableListViewItem.dart';
 
 void main() {
   runApp(MainScreen());
@@ -15,13 +17,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Widget> listElements;
+  List<Widget> layers;
 
   @override
   void initState() {
     super.initState();
 
-    this.listElements = <Widget>[
+    this.layers = <Widget>[
       InputImageCard(key: UniqueKey()),
       DismissableListViewItem(
         child: ConvLayerCard(),
@@ -39,13 +41,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void updateElementIndices() {
-    for (int i = 1; i < this.listElements.length; i++) {
-      (this.listElements[i] as DismissableListViewItem).index = i;
+    for (int i = 1; i < this.layers.length; i++) {
+      (this.layers[i] as DismissableListViewItem).index = i;
     }
   }
 
   void dismissElement(int index) {
-    this.listElements.removeAt(index);
+    this.layers.removeAt(index);
     updateElementIndices();
   }
 
@@ -53,11 +55,11 @@ class _MainScreenState extends State<MainScreen> {
     // abrechen wenn der Input layer verschiebt werden soll
     if (oldIndex == 0 || newIndex == 0) return;
     // wurde oberhalb der alten Position positioniert
-    Widget oldElement = this.listElements.removeAt(oldIndex);
+    Widget oldElement = this.layers.removeAt(oldIndex);
     if (newIndex < oldIndex) {
-      this.listElements.insert(newIndex, oldElement);
+      this.layers.insert(newIndex, oldElement);
     } else {
-      this.listElements.insert(newIndex - 1, oldElement);
+      this.layers.insert(newIndex - 1, oldElement);
     }
     print("oldIndex: $oldIndex, newIndex: $newIndex");
     updateElementIndices();
@@ -78,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
                       this.reorderElements(oldIndex, newIndex);
                     });
                   },
-                  children: this.listElements,
+                  children: this.layers,
                 ),
               ),
               Container(
@@ -89,11 +91,11 @@ class _MainScreenState extends State<MainScreen> {
                     RaisedButton(
                       onPressed: () {
                         print("evaluate");
-                        print(this.listElements.length);
+                        print(this.layers.length);
                       },
                       child: Text("evaluate"),
                     ),
-                    NewLayerButton(),
+                    NewLayerButton(layers: this.layers),
                   ],
                 ),
               )
@@ -105,37 +107,12 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class DismissableListViewItem extends StatefulWidget {
-  final Widget child;
-  final Function onDismissed;
-  int index;
-  DismissableListViewItem({
-    Key key,
-    @required this.child,
-    @required this.onDismissed,
-    @required this.index,
-  }) : super(key: key);
-
-  @override
-  _DismissableListViewItemState createState() =>
-      _DismissableListViewItemState();
-}
-
-class _DismissableListViewItemState extends State<DismissableListViewItem> {
-  @override
-  Widget build(BuildContext context) {
-    return Dismissible(
-      child: widget.child,
-      background: Container(color: Colors.lightGreenAccent),
-      key: UniqueKey(),
-      onDismissed: (direction) => this.widget.onDismissed(this.widget.index),
-    );
-  }
-}
-
 class NewLayerButton extends StatelessWidget {
+  final List<Widget> layers;
+
   const NewLayerButton({
     Key key,
+    @required this.layers,
   }) : super(key: key);
 
   @override
@@ -144,18 +121,7 @@ class NewLayerButton extends StatelessWidget {
       onPressed: () {
         showModalBottomSheet(
           context: context,
-          builder: (context) => Container(
-            decoration: BoxDecoration(color: Color(0xFF737373)),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xFFDDDDDD),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0)),
-              ),
-              height: 262,
-            ),
-          ),
+          builder: (context) => NewLayerSubScreen(layers: this.layers),
         );
       },
       child: Text("new Layer"),

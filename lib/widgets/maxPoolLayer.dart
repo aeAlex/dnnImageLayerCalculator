@@ -4,6 +4,8 @@ import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 import 'twoLineText.dart';
 
 class MaxPoolLayer extends StatelessWidget {
+  static Color color = Color.fromARGB(255, 205, 231, 251);
+
   const MaxPoolLayer({
     Key key,
   }) : super(key: key);
@@ -11,7 +13,7 @@ class MaxPoolLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      color: Color.fromARGB(255, 205, 231, 251),
+      color: MaxPoolLayer.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

@@ -4,6 +4,8 @@ import "layerCardExterior.dart";
 import 'twoLineText.dart';
 
 class ConvLayerCard extends StatelessWidget {
+  static Color color = Color.fromARGB(255, 230, 207, 255);
+
   const ConvLayerCard({
     Key key,
   }) : super(key: key);
@@ -11,7 +13,7 @@ class ConvLayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      color: Color.fromARGB(255, 230, 207, 255),
+      color: ConvLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
