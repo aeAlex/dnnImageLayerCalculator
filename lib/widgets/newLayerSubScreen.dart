@@ -25,7 +25,7 @@ class NewLayerSubScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Color(0xFFDDDDDD),
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+            topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
       ),
       height: NewLayerSubScreen.subScreenHight,
       child: Row(

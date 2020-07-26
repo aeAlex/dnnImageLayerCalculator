@@ -23,6 +23,7 @@ class _LayerScreenState extends State<LayerScreen> {
   }
 
   void scrollToBottom() {
+    setState(() {});
     double maxScrollPosition = this.scrollController.position.maxScrollExtent;
     print(maxScrollPosition);
     this.scrollController.jumpTo(maxScrollPosition);
@@ -74,14 +75,7 @@ class _LayerScreenState extends State<LayerScreen> {
                               },
                               child: Text("evaluate"),
                             ),
-                            NewLayerButton(
-                              updateUiFunction: () {
-                                setState(() {});
-                                scrollToBottom();
-                              },
-                              isSubScreenShownFunction: setIsSubScreenShown,
-                              parrent: this,
-                            ),
+                            NewLayerButton(parrent: this),
                           ],
                         ),
                       )
@@ -95,16 +89,9 @@ class _LayerScreenState extends State<LayerScreen> {
 }
 
 class NewLayerButton extends StatelessWidget {
-  final Function updateUiFunction;
-  final Function isSubScreenShownFunction;
   final _LayerScreenState parrent;
 
-  const NewLayerButton(
-      {Key key,
-      @required this.updateUiFunction,
-      @required this.isSubScreenShownFunction,
-      @required this.parrent})
-      : super(key: key);
+  const NewLayerButton({Key key, @required this.parrent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,15 +100,14 @@ class NewLayerButton extends StatelessWidget {
         this.parrent.bottomSheet = showBottomSheet(
           context: context,
           builder: (context) =>
-              NewLayerSubScreen(updateUiFunction: this.updateUiFunction),
+              NewLayerSubScreen(updateUiFunction: this.parrent.scrollToBottom),
         );
-        isSubScreenShownFunction(true);
-
+        this.parrent.setIsSubScreenShown(true);
         this
             .parrent
             .bottomSheet
             .closed
-            .then((value) => isSubScreenShownFunction(false));
+            .then((value) => this.parrent.setIsSubScreenShown(false));
       },
       child: Text("new Layer"),
     );
