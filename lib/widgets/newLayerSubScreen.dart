@@ -9,8 +9,12 @@ import 'package:imageshapecalculator/models/layers.dart';
 import 'dismissableListViewItem.dart';
 
 class NewLayerSubScreen extends StatelessWidget {
+  static double subScreenHight = 262;
+  final Function updateUiFunction;
+
   const NewLayerSubScreen({
     Key key,
+    @required this.updateUiFunction,
   }) : super(key: key);
 
   @override
@@ -18,42 +22,49 @@ class NewLayerSubScreen extends StatelessWidget {
     Layers layers = Provider.of<Layers>(context);
 
     return Container(
-      decoration: BoxDecoration(color: Color(0xFF737373)),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color(0xFFDDDDDD),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
-        ),
-        height: 262,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            NewLayerSelectionCard(
-              layerName: "Convolutional",
-              color: ConvLayerCard.color,
-              onSelected: () {
-                print("Convolution-Layer was added");
-                layers.layerList.add(
-                  DismissableListViewItem(
-                    child: ConvLayerCard(),
-                    key: UniqueKey(),
-                    onDismissed: (index) => layers.dismissElement(index),
-                    index: 1,
-                  ),
-                );
-              },
-            ),
-            SizedBox(width: 8.0),
-            NewLayerSelectionCard(
-              layerName: "Maxpool",
-              color: MaxPoolLayer.color,
-              onSelected: () {
-                print("Maxpool-Layer was added");
-              },
-            ),
-          ],
-        ),
+      decoration: BoxDecoration(
+        color: Color(0xFFDDDDDD),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+      ),
+      height: NewLayerSubScreen.subScreenHight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          NewLayerSelectionCard(
+            layerName: "Convolutional",
+            color: ConvLayerCard.color,
+            onSelected: () {
+              print("Convolution-Layer was added");
+              layers.layerList.add(
+                DismissableListViewItem(
+                  child: ConvLayerCard(),
+                  key: UniqueKey(),
+                  onDismissed: (index) => layers.dismissElement(index),
+                  index: layers.layerList.length,
+                ),
+              );
+              this.updateUiFunction();
+            },
+          ),
+          SizedBox(width: 8.0),
+          NewLayerSelectionCard(
+            layerName: "Maxpool",
+            color: MaxPoolLayer.color,
+            onSelected: () {
+              print("Maxpool-Layer was added");
+              layers.layerList.add(
+                DismissableListViewItem(
+                  child: MaxPoolLayer(),
+                  key: UniqueKey(),
+                  onDismissed: (index) => layers.dismissElement(index),
+                  index: layers.layerList.length,
+                ),
+              );
+              this.updateUiFunction();
+            },
+          ),
+        ],
       ),
     );
   }

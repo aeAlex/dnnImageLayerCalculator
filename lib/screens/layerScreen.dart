@@ -11,9 +11,27 @@ class LayerScreen extends StatefulWidget {
 }
 
 class _LayerScreenState extends State<LayerScreen> {
+  ScrollController scrollController;
+  bool isSubScreenShown = false;
+  PersistentBottomSheetController bottomSheet;
+
   @override
   void initState() {
     super.initState();
+
+    this.scrollController = ScrollController();
+  }
+
+  void scrollToBottom() {
+    double maxScrollPosition = this.scrollController.position.maxScrollExtent;
+    print(maxScrollPosition);
+    this.scrollController.jumpTo(maxScrollPosition);
+  }
+
+  setIsSubScreenShown(bool value) {
+    setState(() {
+      this.isSubScreenShown = value;
+    });
   }
 
   @override
@@ -24,36 +42,51 @@ class _LayerScreenState extends State<LayerScreen> {
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: ReorderableListView(
-                  padding: const EdgeInsets.all(8.0),
-                  onReorder: (int oldIndex, int newIndex) {
-                    setState(() {
-                      layers.reorderElements(oldIndex, newIndex);
-                    });
-                  },
-                  children: layers.layerList,
+          child: GestureDetector(
+            onTap: () {
+              if (this.isSubScreenShown) bottomSheet.close();
+            },
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: ReorderableListView(
+                    padding: const EdgeInsets.all(8.0),
+                    onReorder: (int oldIndex, int newIndex) {
+                      setState(() {
+                        layers.reorderElements(oldIndex, newIndex);
+                      });
+                    },
+                    children: layers.layerList,
+                    scrollController: this.scrollController,
+                  ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(color: Colors.blue),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      onPressed: () {
-                        print("evaluate");
-                        print(layers.layerList.length);
-                      },
-                      child: Text("evaluate"),
-                    ),
-                    NewLayerButton(),
-                  ],
-                ),
-              )
-            ],
+                (this.isSubScreenShown)
+                    ? SizedBox(height: NewLayerSubScreen.subScreenHight)
+                    : Container(
+                        decoration: BoxDecoration(color: Colors.blue),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            RaisedButton(
+                              onPressed: () {
+                                print("evaluate");
+                                print(layers.layerList.length);
+                              },
+                              child: Text("evaluate"),
+                            ),
+                            NewLayerButton(
+                              updateUiFunction: () {
+                                setState(() {});
+                                scrollToBottom();
+                              },
+                              isSubScreenShownFunction: setIsSubScreenShown,
+                              parrent: this,
+                            ),
+                          ],
+                        ),
+                      )
+              ],
+            ),
           ),
         ),
       ),
@@ -62,14 +95,33 @@ class _LayerScreenState extends State<LayerScreen> {
 }
 
 class NewLayerButton extends StatelessWidget {
+  final Function updateUiFunction;
+  final Function isSubScreenShownFunction;
+  final _LayerScreenState parrent;
+
+  const NewLayerButton(
+      {Key key,
+      @required this.updateUiFunction,
+      @required this.isSubScreenShownFunction,
+      @required this.parrent})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: () {
-        showModalBottomSheet(
+        this.parrent.bottomSheet = showBottomSheet(
           context: context,
-          builder: (context) => NewLayerSubScreen(),
+          builder: (context) =>
+              NewLayerSubScreen(updateUiFunction: this.updateUiFunction),
         );
+        isSubScreenShownFunction(true);
+
+        this
+            .parrent
+            .bottomSheet
+            .closed
+            .then((value) => isSubScreenShownFunction(false));
       },
       child: Text("new Layer"),
     );
