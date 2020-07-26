@@ -4,6 +4,10 @@ import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 import 'twoLineText.dart';
 
 class InputImageCard extends StatelessWidget {
+  const InputImageCard({
+    Key key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
