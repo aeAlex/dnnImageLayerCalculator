@@ -26,7 +26,9 @@ class _LayerScreenState extends State<LayerScreen> {
     setState(() {});
     double maxScrollPosition = this.scrollController.position.maxScrollExtent;
     print(maxScrollPosition);
-    this.scrollController.jumpTo(maxScrollPosition);
+    //this.scrollController.jumpTo(maxScrollPosition);
+    this.scrollController.animateTo(maxScrollPosition,
+        duration: Duration(microseconds: 2000), curve: Curves.decelerate);
   }
 
   setIsSubScreenShown(bool value) {

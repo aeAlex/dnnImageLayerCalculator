@@ -4,6 +4,7 @@ import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/inputImageCard.dart';
 import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
+import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 
 class Layers extends ChangeNotifier {
   List<Widget> layerList;
@@ -13,6 +14,7 @@ class Layers extends ChangeNotifier {
       InputImageCard(key: UniqueKey()),
       DismissableListViewItem(
         child: ConvLayerCard(),
+        expandedChild: ExpandedConvLayerCard(),
         key: UniqueKey(),
         onDismissed: (index) => this.dismissElement(index),
         index: 1,
