@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
-import 'package:imageshapecalculator/widgets/inputImageCard.dart';
+import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
 import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
 import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
+import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
 class Layers extends ChangeNotifier {
   List<Widget> layerList;
 
   Layers() {
     this.layerList = <Widget>[
-      InputImageCard(key: UniqueKey()),
+      ToggleableInputLayer(key: UniqueKey()),
       DismissableListViewItem(
         child: ConvLayerCard(),
         expandedChild: ExpandedConvLayerCard(),
@@ -21,6 +22,7 @@ class Layers extends ChangeNotifier {
       ),
       DismissableListViewItem(
         child: MaxPoolLayer(),
+        expandedChild: ExpandedMaxPoolLayerCard(),
         key: UniqueKey(),
         onDismissed: (index) => this.dismissElement(index),
         index: 2,

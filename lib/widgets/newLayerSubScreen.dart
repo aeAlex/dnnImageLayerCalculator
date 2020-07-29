@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
+import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
 
 import 'package:provider/provider.dart';
 
@@ -39,6 +41,7 @@ class NewLayerSubScreen extends StatelessWidget {
               layers.layerList.add(
                 DismissableListViewItem(
                   child: ConvLayerCard(),
+                  expandedChild: ExpandedConvLayerCard(),
                   key: UniqueKey(),
                   onDismissed: (index) => layers.dismissElement(index),
                   index: layers.layerList.length,
@@ -56,6 +59,7 @@ class NewLayerSubScreen extends StatelessWidget {
               layers.layerList.add(
                 DismissableListViewItem(
                   child: MaxPoolLayer(),
+                  expandedChild: ExpandedMaxPoolLayerCard(),
                   key: UniqueKey(),
                   onDismissed: (index) => layers.dismissElement(index),
                   index: layers.layerList.length,

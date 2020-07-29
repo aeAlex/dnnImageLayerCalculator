@@ -4,6 +4,9 @@ import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 import 'twoLineText.dart';
 
 class InputImageCard extends StatelessWidget {
+  static Color color = Color.fromARGB(255, 255, 237, 133);
+  static AssetImage iconAssetImage = AssetImage('images/enter.png');
+
   const InputImageCard({
     Key key,
   }) : super(key: key);
@@ -11,7 +14,7 @@ class InputImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      color: Color.fromARGB(255, 255, 237, 133),
+      color: InputImageCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -23,7 +26,7 @@ class InputImageCard extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: 20.0),
               Image(
-                image: AssetImage('images/enter.png'),
+                image: InputImageCard.iconAssetImage,
                 width: 50.0,
                 height: 50.0,
               ),

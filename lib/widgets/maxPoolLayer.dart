@@ -5,6 +5,7 @@ import 'twoLineText.dart';
 
 class MaxPoolLayer extends StatelessWidget {
   static Color color = Color.fromARGB(255, 205, 231, 251);
+  static AssetImage iconAssetImage = AssetImage('images/down.png');
 
   const MaxPoolLayer({
     Key key,
@@ -25,7 +26,7 @@ class MaxPoolLayer extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: 20.0),
               Image(
-                image: AssetImage('images/down.png'),
+                image: MaxPoolLayer.iconAssetImage,
                 width: 50.0,
                 height: 50.0,
               ),
