@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/inputLayerData.dart';
 import 'package:imageshapecalculator/widgets/inputImageCard.dart';
 
 import 'labeledInputField.dart';
@@ -6,8 +7,11 @@ import 'labeledVectorInputField.dart';
 import "layerCardExterior.dart";
 
 class ExpandedInputImageCard extends StatelessWidget {
+  final InputLayerData inputLayerData;
+
   const ExpandedInputImageCard({
     Key key,
+    @required this.inputLayerData,
   }) : super(key: key);
 
   @override
@@ -38,8 +42,24 @@ class ExpandedInputImageCard extends StatelessWidget {
                     SizedBox(height: 8.0),
                     LabeledVectorInputField(
                       label: "Image Size: ",
+                      leftInitialValue:
+                          this.inputLayerData.imageSize.w.toString(),
+                      rightInitialValue:
+                          this.inputLayerData.imageSize.h.toString(),
+                      onLeftChanged: (value) {
+                        this.inputLayerData.imageSize.w = int.parse(value);
+                      },
+                      onRightChanged: (value) {
+                        this.inputLayerData.imageSize.h = int.parse(value);
+                      },
                     ),
-                    LabeledInputField(label: "Depth: "),
+                    LabeledInputField(
+                      label: "Depth: ",
+                      initialValue: this.inputLayerData.depth.toString(),
+                      onChanged: (value) {
+                        this.inputLayerData.depth = int.parse(value);
+                      },
+                    ),
                   ],
                 ),
               ),

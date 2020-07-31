@@ -6,5 +6,5 @@ class ConvolutionalLayerData extends LayerData {
   Rectangle kernel;
   Rectangle shift;
 
-  ConvolutionalLayerData({this.anzFilter, this.kernel, this.shift}) {}
+  ConvolutionalLayerData({this.anzFilter, this.kernel, this.shift});
 }

@@ -17,7 +17,7 @@ class DismissableListViewItem extends StatefulWidget {
     @required this.index,
     @required this.layerData,
     this.isInitiallyExpanded = false,
-  }) : super(key: key) {}
+  }) : super(key: key);
 
   @override
   _DismissableListViewItemState createState() =>

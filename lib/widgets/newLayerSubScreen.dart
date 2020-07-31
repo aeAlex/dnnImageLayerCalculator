@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
+import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
+import 'package:imageshapecalculator/models/rectangle.dart';
 import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
 
@@ -38,10 +42,18 @@ class NewLayerSubScreen extends StatelessWidget {
             color: ConvLayerCard.color,
             onSelected: () {
               print("Convolution-Layer was added");
+
+              LayerData convLayerData = ConvolutionalLayerData(
+                  anzFilter: 64,
+                  kernel: Rectangle(w: 3, h: 3),
+                  shift: Rectangle(w: 1, h: 1));
+
               layers.layerList.add(
                 DismissableListViewItem(
-                  child: ConvLayerCard(),
-                  expandedChild: ExpandedConvLayerCard(),
+                  layerData: convLayerData,
+                  child: ConvLayerCard(convLayerData: convLayerData),
+                  expandedChild:
+                      ExpandedConvLayerCard(convLayerData: convLayerData),
                   key: UniqueKey(),
                   onDismissed: (index) => layers.dismissElement(index),
                   index: layers.layerList.length,
@@ -56,10 +68,19 @@ class NewLayerSubScreen extends StatelessWidget {
             color: MaxPoolLayer.color,
             onSelected: () {
               print("Maxpool-Layer was added");
+
+              LayerData maxPoolLayerData = MaxPoolingLayerData(
+                  kernel: Rectangle(w: 2, h: 2), shift: Rectangle(w: 1, h: 1));
+
               layers.layerList.add(
                 DismissableListViewItem(
-                  child: MaxPoolLayer(),
-                  expandedChild: ExpandedMaxPoolLayerCard(),
+                  layerData: maxPoolLayerData,
+                  child: MaxPoolLayer(
+                    maxPoolLayerData: maxPoolLayerData,
+                  ),
+                  expandedChild: ExpandedMaxPoolLayerCard(
+                    maxPoolLayerData: maxPoolLayerData,
+                  ),
                   key: UniqueKey(),
                   onDismissed: (index) => layers.dismissElement(index),
                   index: layers.layerList.length,

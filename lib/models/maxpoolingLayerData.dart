@@ -6,4 +6,6 @@ class MaxPoolingLayerData extends LayerData {
   Rectangle shift;
 
   MaxPoolingLayerData({this.kernel, this.shift});
+
+  // TODO: Implement that the default values are the of the last same layer
 }

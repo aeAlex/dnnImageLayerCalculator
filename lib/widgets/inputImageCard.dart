@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:imageshapecalculator/models/inputLayerData.dart';
 import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 
 import 'twoLineText.dart';
@@ -7,8 +8,11 @@ class InputImageCard extends StatelessWidget {
   static Color color = Color.fromARGB(255, 255, 237, 133);
   static AssetImage iconAssetImage = AssetImage('images/enter.png');
 
+  final InputLayerData inputLayerData;
+
   const InputImageCard({
     Key key,
+    @required this.inputLayerData,
   }) : super(key: key);
 
   @override
@@ -36,8 +40,12 @@ class InputImageCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TwoLineText(
-                        textAbove: "Image Size:", textBeneath: "128x128"),
-                    TwoLineText(textAbove: "Depth:", textBeneath: "3"),
+                        textAbove: "Image Size:",
+                        textBeneath:
+                            "${this.inputLayerData.imageSize.w}x${this.inputLayerData.imageSize.h}"),
+                    TwoLineText(
+                        textAbove: "Depth:",
+                        textBeneath: "${this.inputLayerData.depth}"),
                   ],
                 ),
               ),

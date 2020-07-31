@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/inputLayerData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
@@ -23,9 +24,12 @@ class Layers extends ChangeNotifier {
   LayerData maxPoolLayerData = MaxPoolingLayerData(
       kernel: Rectangle(w: 2, h: 2), shift: Rectangle(w: 1, h: 1));
 
+  InputLayerData inputLayerData =
+      InputLayerData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
+
   Layers() {
     this.layerList = <Widget>[
-      ToggleableInputLayer(key: UniqueKey()),
+      ToggleableInputLayer(key: UniqueKey(), inputLayerData: inputLayerData),
       DismissableListViewItem(
         layerData: convLayerData,
         child: ConvLayerCard(convLayerData: convLayerData),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/inputLayerData.dart';
 import 'package:imageshapecalculator/widgets/expandedInputImageCard.dart';
 
 import 'inputImageCard.dart';
@@ -6,9 +7,12 @@ import 'inputImageCard.dart';
 class ToggleableInputLayer extends StatefulWidget {
   final bool isInitiallyExtended;
 
+  final InputLayerData inputLayerData;
+
   const ToggleableInputLayer({
     Key key,
     this.isInitiallyExtended = true,
+    @required this.inputLayerData,
   }) : super(key: key);
 
   @override
@@ -28,7 +32,9 @@ class _ToggleableInputLayerState extends State<ToggleableInputLayer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: (this.isExtended) ? ExpandedInputImageCard() : InputImageCard(),
+      child: (this.isExtended)
+          ? ExpandedInputImageCard(inputLayerData: this.widget.inputLayerData)
+          : InputImageCard(inputLayerData: this.widget.inputLayerData),
       onTap: () {
         setState(() {
           this.isExtended = !this.isExtended;
