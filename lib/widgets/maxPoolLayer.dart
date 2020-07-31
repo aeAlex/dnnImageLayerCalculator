@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 
 import 'twoLineText.dart';
@@ -7,8 +8,11 @@ class MaxPoolLayer extends StatelessWidget {
   static Color color = Color.fromARGB(255, 205, 231, 251);
   static AssetImage iconAssetImage = AssetImage('images/down.png');
 
+  final MaxPoolingLayerData maxPoolLayerData;
+
   const MaxPoolLayer({
     Key key,
+    @required this.maxPoolLayerData,
   }) : super(key: key);
 
   @override
@@ -35,8 +39,14 @@ class MaxPoolLayer extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    TwoLineText(textAbove: "Kernel:", textBeneath: "2x2"),
-                    TwoLineText(textAbove: "Shift:", textBeneath: "1x1"),
+                    TwoLineText(
+                        textAbove: "Kernel:",
+                        textBeneath:
+                            "${maxPoolLayerData.kernel.w}x${maxPoolLayerData.kernel.h}"),
+                    TwoLineText(
+                        textAbove: "Shift:",
+                        textBeneath:
+                            "${maxPoolLayerData.shift.w}x${maxPoolLayerData.shift.h}"),
                   ],
                 ),
               ),

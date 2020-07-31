@@ -1,1 +1,1 @@
-class LayerData {}
+abstract class LayerData {}

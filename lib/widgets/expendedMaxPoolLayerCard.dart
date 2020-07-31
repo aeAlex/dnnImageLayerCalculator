@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
 
 import "layerCardExterior.dart";
 import 'labeledVectorInputField.dart';
 
 class ExpandedMaxPoolLayerCard extends StatelessWidget {
+  final MaxPoolingLayerData maxPoolLayerData;
+
   const ExpandedMaxPoolLayerCard({
     Key key,
+    @required this.maxPoolLayerData,
   }) : super(key: key);
 
   @override
@@ -37,9 +41,29 @@ class ExpandedMaxPoolLayerCard extends StatelessWidget {
                     SizedBox(height: 8.0),
                     LabeledVectorInputField(
                       label: "Kernel:",
+                      leftInitialValue:
+                          this.maxPoolLayerData.kernel.w.toString(),
+                      rightInitialValue:
+                          this.maxPoolLayerData.kernel.h.toString(),
+                      onLeftChanged: (value) {
+                        this.maxPoolLayerData.kernel.w = int.parse(value);
+                      },
+                      onRightChanged: (value) {
+                        this.maxPoolLayerData.kernel.h = int.parse(value);
+                      },
                     ),
                     LabeledVectorInputField(
                       label: "Shift: ",
+                      leftInitialValue:
+                          this.maxPoolLayerData.shift.w.toString(),
+                      rightInitialValue:
+                          this.maxPoolLayerData.shift.h.toString(),
+                      onLeftChanged: (value) {
+                        this.maxPoolLayerData.shift.w = int.parse(value);
+                      },
+                      onRightChanged: (value) {
+                        this.maxPoolLayerData.shift.h = int.parse(value);
+                      },
                     ),
                   ],
                 ),

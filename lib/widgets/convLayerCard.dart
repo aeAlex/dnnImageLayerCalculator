@@ -4,7 +4,7 @@ import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 import "layerCardExterior.dart";
 import 'twoLineText.dart';
 
-class ConvLayerCard extends StatefulWidget {
+class ConvLayerCard extends StatelessWidget {
   static Color color = Color.fromARGB(255, 230, 207, 255);
   static AssetImage iconAssetImage = AssetImage('images/filter.png');
 
@@ -15,11 +15,6 @@ class ConvLayerCard extends StatefulWidget {
     @required this.convLayerData,
   }) : super(key: key);
 
-  @override
-  _ConvLayerCardState createState() => _ConvLayerCardState();
-}
-
-class _ConvLayerCardState extends State<ConvLayerCard> {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
@@ -46,16 +41,16 @@ class _ConvLayerCardState extends State<ConvLayerCard> {
                   children: <Widget>[
                     TwoLineText(
                       textAbove: "Filter:",
-                      textBeneath: "${widget.convLayerData.anzFilter}",
+                      textBeneath: "${convLayerData.anzFilter}",
                     ),
                     TwoLineText(
                         textAbove: "Kernel:",
                         textBeneath:
-                            "${widget.convLayerData.kernel.w}x${widget.convLayerData.kernel.h}"),
+                            "${convLayerData.kernel.w}x${convLayerData.kernel.h}"),
                     TwoLineText(
                         textAbove: "Shift:",
                         textBeneath:
-                            "${widget.convLayerData.shift.w}x${widget.convLayerData.shift.h}"),
+                            "${convLayerData.shift.w}x${convLayerData.shift.h}"),
                   ],
                 ),
               ),
