@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 
 import 'labeledInputField.dart';
@@ -6,8 +7,11 @@ import 'labeledVectorInputField.dart';
 import "layerCardExterior.dart";
 
 class ExpandedConvLayerCard extends StatelessWidget {
+  final ConvolutionalLayerData convLayerData;
+
   const ExpandedConvLayerCard({
     Key key,
+    @required this.convLayerData,
   }) : super(key: key);
 
   @override
@@ -36,12 +40,34 @@ class ExpandedConvLayerCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     SizedBox(height: 8.0),
-                    LabeledInputField(label: "Filter: "),
+                    LabeledInputField(
+                      label: "Filter: ",
+                      initialValue: this.convLayerData.anzFilter.toString(),
+                      onChanged: (value) {
+                        this.convLayerData.anzFilter = int.parse(value);
+                      },
+                    ),
                     LabeledVectorInputField(
                       label: "Kernel:",
+                      leftInitialValue: this.convLayerData.kernel.w.toString(),
+                      rightInitialValue: this.convLayerData.kernel.h.toString(),
+                      onLeftChanged: (value) {
+                        this.convLayerData.kernel.w = int.parse(value);
+                      },
+                      onRightChanged: (value) {
+                        this.convLayerData.kernel.h = int.parse(value);
+                      },
                     ),
                     LabeledVectorInputField(
                       label: "Shift: ",
+                      leftInitialValue: this.convLayerData.shift.w.toString(),
+                      rightInitialValue: this.convLayerData.shift.h.toString(),
+                      onLeftChanged: (value) {
+                        this.convLayerData.shift.w = int.parse(value);
+                      },
+                      onRightChanged: (value) {
+                        this.convLayerData.shift.h = int.parse(value);
+                      },
                     ),
                   ],
                 ),

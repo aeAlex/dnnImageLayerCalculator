@@ -1,13 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LabeledVectorInputField extends StatelessWidget {
+class LabeledVectorInputField extends StatefulWidget {
   final String label;
+  final String leftInitialValue;
+  final String rightInitialValue;
+  final Function onLeftChanged;
+  final Function onRightChanged;
 
   const LabeledVectorInputField({
     Key key,
     @required this.label,
+    @required this.leftInitialValue,
+    @required this.rightInitialValue,
+    @required this.onLeftChanged,
+    @required this.onRightChanged,
   }) : super(key: key);
+
+  @override
+  _LabeledVectorInputFieldState createState() =>
+      _LabeledVectorInputFieldState();
+}
+
+class _LabeledVectorInputFieldState extends State<LabeledVectorInputField> {
+  final TextEditingController _leftInputFieldController =
+      TextEditingController();
+  final TextEditingController _rightInputFieldController =
+      TextEditingController();
+  String leftValue;
+  String rightValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    this.leftValue = this.widget.leftInitialValue;
+    this.rightValue = this.widget.rightInitialValue;
+
+    this._leftInputFieldController.text = this.leftValue;
+    this._rightInputFieldController.text = this.rightValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +52,7 @@ class LabeledVectorInputField extends StatelessWidget {
         children: <Widget>[
           SizedBox(
               child: Text(
-                this.label,
+                this.widget.label,
                 textAlign: TextAlign.end,
               ),
               width: 45.0),
@@ -33,6 +65,11 @@ class LabeledVectorInputField extends StatelessWidget {
                 WhitelistingTextInputFormatter.digitsOnly
               ], // Only numbers can be entered
               textAlign: TextAlign.center,
+              controller: this._leftInputFieldController,
+              onChanged: (value) {
+                this.leftValue = value;
+                this.widget.onLeftChanged(value);
+              },
             ),
             height: 30.0,
           )),
@@ -45,6 +82,11 @@ class LabeledVectorInputField extends StatelessWidget {
                 WhitelistingTextInputFormatter.digitsOnly
               ], // Only numbers can be entered
               textAlign: TextAlign.center,
+              controller: this._rightInputFieldController,
+              onChanged: (value) {
+                this.rightValue = value;
+                this.widget.onRightChanged(value);
+              },
             ),
             height: 30.0,
           )),

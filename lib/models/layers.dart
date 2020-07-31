@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/models/rectangle.dart';
 
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
@@ -7,15 +9,23 @@ import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
 import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
+import 'convolutionalLayerData.dart';
+
 class Layers extends ChangeNotifier {
   List<Widget> layerList;
+
+  LayerData convLayerData = ConvolutionalLayerData(
+      anzFilter: 64,
+      kernel: Rectangle(w: 3, h: 3),
+      shift: Rectangle(w: 1, h: 1));
 
   Layers() {
     this.layerList = <Widget>[
       ToggleableInputLayer(key: UniqueKey()),
       DismissableListViewItem(
-        child: ConvLayerCard(),
-        expandedChild: ExpandedConvLayerCard(),
+        layerData: convLayerData,
+        child: ConvLayerCard(convLayerData: convLayerData),
+        expandedChild: ExpandedConvLayerCard(convLayerData: convLayerData),
         key: UniqueKey(),
         onDismissed: (index) => this.dismissElement(index),
         index: 1,

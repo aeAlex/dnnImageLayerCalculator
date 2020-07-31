@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LabeledInputField extends StatelessWidget {
+class LabeledInputField extends StatefulWidget {
   final String label;
+  final String initialValue;
+  final Function onChanged;
 
   const LabeledInputField({
     Key key,
     @required this.label,
+    this.initialValue,
+    @required this.onChanged,
   }) : super(key: key);
+
+  @override
+  _LabeledInputFieldState createState() => _LabeledInputFieldState();
+}
+
+class _LabeledInputFieldState extends State<LabeledInputField> {
+  final TextEditingController _inputFieldController = TextEditingController();
+  String value;
+
+  @override
+  void initState() {
+    super.initState();
+    this.value = this.widget.initialValue;
+    this._inputFieldController.text = this.value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +39,7 @@ class LabeledInputField extends StatelessWidget {
         children: <Widget>[
           SizedBox(
               child: Text(
-                this.label,
+                this.widget.label,
                 textAlign: TextAlign.end,
               ),
               width: 45.0),
@@ -33,6 +52,11 @@ class LabeledInputField extends StatelessWidget {
                   WhitelistingTextInputFormatter.digitsOnly
                 ], // Only numbers can be entered
                 textAlign: TextAlign.center,
+                controller: _inputFieldController,
+                onChanged: (value) {
+                  this.value = value;
+                  this.widget.onChanged(value);
+                },
               ),
               height: 30.0,
             ),
