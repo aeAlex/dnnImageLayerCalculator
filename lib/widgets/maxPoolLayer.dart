@@ -14,6 +14,7 @@ class MaxPoolLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
+      height: 81,
       color: MaxPoolLayer.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

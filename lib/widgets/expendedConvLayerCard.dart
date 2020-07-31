@@ -13,6 +13,7 @@ class ExpandedConvLayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
+      height: 183.0,
       color: ConvLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class LayerCardExterior extends StatelessWidget {
   final Widget child;
   final Color color;
+  final double height;
 
-  const LayerCardExterior({Key key, @required this.child, @required this.color})
+  const LayerCardExterior(
+      {Key key,
+      @required this.child,
+      @required this.color,
+      @required this.height})
       : super(key: key);
 
   @override
@@ -24,6 +29,7 @@ class LayerCardExterior extends StatelessWidget {
       ),
       margin: const EdgeInsets.only(bottom: 8.0),
       padding: const EdgeInsets.all(6.0),
+      height: height,
     );
   }
 }

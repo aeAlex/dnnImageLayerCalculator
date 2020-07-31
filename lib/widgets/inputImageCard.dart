@@ -14,6 +14,7 @@ class InputImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
+      height: 81.0,
       color: InputImageCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

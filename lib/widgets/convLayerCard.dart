@@ -14,6 +14,7 @@ class ConvLayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
+      height: 81,
       color: ConvLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
