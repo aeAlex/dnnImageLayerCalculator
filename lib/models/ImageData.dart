@@ -1,4 +1,3 @@
-import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
 
 class ImageData {

@@ -18,7 +18,7 @@ class ConvLayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      height: 81,
+      height: 118,
       color: ConvLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,6 +59,29 @@ class ConvLayerCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  child: Image(
+                    image: AssetImage('images/arrow.png'),
+                  ),
+                  height: 30.0,
+                ),
+                SizedBox(width: 10.0),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurpleAccent,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  child: Text("08942x0434982x34243"),
+                  padding: EdgeInsets.all(10.0),
+                ),
+              ],
+            ),
+            key: UniqueKey(),
           ),
         ],
       ),
