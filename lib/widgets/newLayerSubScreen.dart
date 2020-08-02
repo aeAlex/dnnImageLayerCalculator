@@ -48,10 +48,13 @@ class NewLayerSubScreen extends StatelessWidget {
                   kernel: Rectangle(w: 3, h: 3),
                   stride: Rectangle(w: 1, h: 1));
 
+              GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
+
               layers.layerList.add(
                 DismissableListViewItem(
                   layerData: convLayerData,
-                  child: ConvLayerCard(convLayerData: convLayerData),
+                  child: ConvLayerCard(
+                      convLayerData: convLayerData, key: conLayerKey),
                   expandedChild:
                       ExpandedConvLayerCard(convLayerData: convLayerData),
                   key: UniqueKey(),

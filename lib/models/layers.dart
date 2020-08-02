@@ -28,12 +28,14 @@ class Layers extends ChangeNotifier {
   ImageData inputLayerData =
       ImageData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
 
+  GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
+
   Layers() {
     this.layerList = <Widget>[
       ToggleableInputLayer(key: UniqueKey(), inputLayerData: inputLayerData),
       DismissableListViewItem(
         layerData: convLayerData,
-        child: ConvLayerCard(convLayerData: convLayerData),
+        child: ConvLayerCard(key: conLayerKey, convLayerData: convLayerData),
         expandedChild: ExpandedConvLayerCard(convLayerData: convLayerData),
         key: UniqueKey(),
         onDismissed: (index) => this.dismissElement(index),

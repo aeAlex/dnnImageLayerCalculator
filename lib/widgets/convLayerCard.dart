@@ -2,23 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 
 import "layerCardExterior.dart";
+import 'outputImageDisplay.dart';
 import 'twoLineText.dart';
 
-class ConvLayerCard extends StatelessWidget {
+class ConvLayerCard extends StatefulWidget {
   static Color color = Color.fromARGB(255, 230, 207, 255);
   static AssetImage iconAssetImage = AssetImage('images/filter.png');
 
-  final ConvolutionalLayerData convLayerData;
+  ConvolutionalLayerData convLayerData;
 
-  const ConvLayerCard({
-    Key key,
+  final GlobalKey<ConvLayerCardState> key;
+
+  ConvLayerCard({
+    this.key,
     @required this.convLayerData,
   }) : super(key: key);
 
   @override
+  ConvLayerCardState createState() => ConvLayerCardState();
+}
+
+class ConvLayerCardState extends State<ConvLayerCard> {
+  double height;
+
+  void update() {
+    setState(() {
+      if (this.widget.convLayerData.outputImageData.isDisplayed) {
+        this.height = 118.0;
+      } else {
+        this.height = 81.0;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    this.update();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      height: 118,
+      height: this.height,
       color: ConvLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,48 +68,29 @@ class ConvLayerCard extends StatelessWidget {
                   children: <Widget>[
                     TwoLineText(
                       textAbove: "Filter:",
-                      textBeneath: "${convLayerData.anzFilter}",
+                      textBeneath: "${widget.convLayerData.anzFilter}",
                     ),
                     TwoLineText(
                         textAbove: "Kernel:",
                         textBeneath:
-                            "${convLayerData.kernel.w}x${convLayerData.kernel.h}"),
+                            "${widget.convLayerData.kernel.w}x${widget.convLayerData.kernel.h}"),
                     TwoLineText(
                         textAbove: "Stride:",
                         textBeneath:
-                            "${convLayerData.stride.w}x${convLayerData.stride.h}"),
+                            "${widget.convLayerData.stride.w}x${widget.convLayerData.stride.h}"),
                     TwoLineText(
                       textAbove: "Padding:",
-                      textBeneath: "${convLayerData.padding}",
+                      textBeneath: "${widget.convLayerData.padding}",
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  child: Image(
-                    image: AssetImage('images/arrow.png'),
-                  ),
-                  height: 30.0,
-                ),
-                SizedBox(width: 10.0),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurpleAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  child: Text("08942x0434982x34243"),
-                  padding: EdgeInsets.all(10.0),
-                ),
-              ],
-            ),
-            key: UniqueKey(),
-          ),
+          (this.widget.convLayerData.outputImageData.isDisplayed)
+              ? OutputImageDisplay(this.widget.convLayerData.outputImageData,
+                  color: Colors.deepPurpleAccent)
+              : Container(),
         ],
       ),
     );

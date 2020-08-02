@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
@@ -105,6 +106,13 @@ class _LayerScreenState extends State<LayerScreen> {
       imageData = layerData.passTrough(imageData);
       print(
           "${imageData.imageSize.w}x${imageData.imageSize.h}x${imageData.depth}");
+      if (disLvItem.child is ConvLayerCard) {
+        ConvLayerCard convLayerCard = disLvItem.child as ConvLayerCard;
+        setState(() {
+          convLayerCard.convLayerData.outputImageData = imageData;
+        });
+        convLayerCard.key.currentState.update();
+      }
     }
   }
 }
