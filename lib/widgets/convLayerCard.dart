@@ -48,9 +48,13 @@ class ConvLayerCard extends StatelessWidget {
                         textBeneath:
                             "${convLayerData.kernel.w}x${convLayerData.kernel.h}"),
                     TwoLineText(
-                        textAbove: "Shift:",
+                        textAbove: "Stride:",
                         textBeneath:
-                            "${convLayerData.shift.w}x${convLayerData.shift.h}"),
+                            "${convLayerData.stride.w}x${convLayerData.stride.h}"),
+                    TwoLineText(
+                      textAbove: "Padding:",
+                      textBeneath: "${convLayerData.padding}",
+                    ),
                   ],
                 ),
               ),

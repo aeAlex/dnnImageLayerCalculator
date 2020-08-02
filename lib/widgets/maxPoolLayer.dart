@@ -44,9 +44,9 @@ class MaxPoolLayer extends StatelessWidget {
                         textBeneath:
                             "${maxPoolLayerData.kernel.w}x${maxPoolLayerData.kernel.h}"),
                     TwoLineText(
-                        textAbove: "Shift:",
+                        textAbove: "Stride:",
                         textBeneath:
-                            "${maxPoolLayerData.shift.w}x${maxPoolLayerData.shift.h}"),
+                            "${maxPoolLayerData.stride.w}x${maxPoolLayerData.stride.h}"),
                   ],
                 ),
               ),

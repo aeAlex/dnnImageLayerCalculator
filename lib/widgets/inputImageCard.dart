@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:imageshapecalculator/models/inputLayerData.dart';
+import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 
 import 'twoLineText.dart';
@@ -8,7 +8,7 @@ class InputImageCard extends StatelessWidget {
   static Color color = Color.fromARGB(255, 255, 237, 133);
   static AssetImage iconAssetImage = AssetImage('images/enter.png');
 
-  final InputLayerData inputLayerData;
+  final ImageData inputLayerData;
 
   const InputImageCard({
     Key key,

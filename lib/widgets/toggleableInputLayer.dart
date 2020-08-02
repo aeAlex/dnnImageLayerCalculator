@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imageshapecalculator/models/inputLayerData.dart';
+import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/widgets/expandedInputImageCard.dart';
 
 import 'inputImageCard.dart';
@@ -7,7 +7,7 @@ import 'inputImageCard.dart';
 class ToggleableInputLayer extends StatefulWidget {
   final bool isInitiallyExtended;
 
-  final InputLayerData inputLayerData;
+  final ImageData inputLayerData;
 
   const ToggleableInputLayer({
     Key key,

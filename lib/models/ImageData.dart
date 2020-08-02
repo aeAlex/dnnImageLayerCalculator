@@ -1,9 +1,9 @@
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
 
-class InputLayerData extends LayerData {
+class ImageData {
   Rectangle imageSize;
   int depth;
 
-  InputLayerData({this.imageSize, this.depth});
+  ImageData({this.imageSize, this.depth});
 }

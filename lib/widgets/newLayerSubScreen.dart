@@ -46,7 +46,7 @@ class NewLayerSubScreen extends StatelessWidget {
               LayerData convLayerData = ConvolutionalLayerData(
                   anzFilter: 64,
                   kernel: Rectangle(w: 3, h: 3),
-                  shift: Rectangle(w: 1, h: 1));
+                  stride: Rectangle(w: 1, h: 1));
 
               layers.layerList.add(
                 DismissableListViewItem(
@@ -70,7 +70,7 @@ class NewLayerSubScreen extends StatelessWidget {
               print("Maxpool-Layer was added");
 
               LayerData maxPoolLayerData = MaxPoolingLayerData(
-                  kernel: Rectangle(w: 2, h: 2), shift: Rectangle(w: 1, h: 1));
+                  kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 1, h: 1));
 
               layers.layerList.add(
                 DismissableListViewItem(

@@ -17,7 +17,7 @@ class ExpandedConvLayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      height: 183.0,
+      height: 231.0,
       color: ConvLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,14 +59,21 @@ class ExpandedConvLayerCard extends StatelessWidget {
                       },
                     ),
                     LabeledVectorInputField(
-                      label: "Shift: ",
-                      leftInitialValue: this.convLayerData.shift.w.toString(),
-                      rightInitialValue: this.convLayerData.shift.h.toString(),
+                      label: "Stride: ",
+                      leftInitialValue: this.convLayerData.stride.w.toString(),
+                      rightInitialValue: this.convLayerData.stride.h.toString(),
                       onLeftChanged: (value) {
-                        this.convLayerData.shift.w = int.parse(value);
+                        this.convLayerData.stride.w = int.parse(value);
                       },
                       onRightChanged: (value) {
-                        this.convLayerData.shift.h = int.parse(value);
+                        this.convLayerData.stride.h = int.parse(value);
+                      },
+                    ),
+                    LabeledInputField(
+                      label: "Padding: ",
+                      initialValue: this.convLayerData.padding.toString(),
+                      onChanged: (value) {
+                        this.convLayerData.padding = int.parse(value);
                       },
                     ),
                   ],

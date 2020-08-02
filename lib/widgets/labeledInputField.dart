@@ -42,7 +42,7 @@ class _LabeledInputFieldState extends State<LabeledInputField> {
                 this.widget.label,
                 textAlign: TextAlign.end,
               ),
-              width: 45.0),
+              width: 55.0),
           SizedBox(width: 10.0),
           Expanded(
             child: SizedBox(

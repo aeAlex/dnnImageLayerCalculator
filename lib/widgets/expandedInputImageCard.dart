@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imageshapecalculator/models/inputLayerData.dart';
+import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/widgets/inputImageCard.dart';
 
 import 'labeledInputField.dart';
@@ -7,7 +7,7 @@ import 'labeledVectorInputField.dart';
 import "layerCardExterior.dart";
 
 class ExpandedInputImageCard extends StatelessWidget {
-  final InputLayerData inputLayerData;
+  final ImageData inputLayerData;
 
   const ExpandedInputImageCard({
     Key key,

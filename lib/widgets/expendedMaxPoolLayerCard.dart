@@ -53,16 +53,16 @@ class ExpandedMaxPoolLayerCard extends StatelessWidget {
                       },
                     ),
                     LabeledVectorInputField(
-                      label: "Shift: ",
+                      label: "Stride: ",
                       leftInitialValue:
-                          this.maxPoolLayerData.shift.w.toString(),
+                          this.maxPoolLayerData.stride.w.toString(),
                       rightInitialValue:
-                          this.maxPoolLayerData.shift.h.toString(),
+                          this.maxPoolLayerData.stride.h.toString(),
                       onLeftChanged: (value) {
-                        this.maxPoolLayerData.shift.w = int.parse(value);
+                        this.maxPoolLayerData.stride.w = int.parse(value);
                       },
                       onRightChanged: (value) {
-                        this.maxPoolLayerData.shift.h = int.parse(value);
+                        this.maxPoolLayerData.stride.h = int.parse(value);
                       },
                     ),
                   ],

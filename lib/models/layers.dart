@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imageshapecalculator/models/inputLayerData.dart';
+import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
@@ -19,13 +19,14 @@ class Layers extends ChangeNotifier {
   LayerData convLayerData = ConvolutionalLayerData(
       anzFilter: 64,
       kernel: Rectangle(w: 3, h: 3),
-      shift: Rectangle(w: 1, h: 1));
+      stride: Rectangle(w: 1, h: 1),
+      padding: 0);
 
   LayerData maxPoolLayerData = MaxPoolingLayerData(
-      kernel: Rectangle(w: 2, h: 2), shift: Rectangle(w: 1, h: 1));
+      kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 1, h: 1));
 
-  InputLayerData inputLayerData =
-      InputLayerData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
+  ImageData inputLayerData =
+      ImageData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
 
   Layers() {
     this.layerList = <Widget>[
