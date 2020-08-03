@@ -15,12 +15,21 @@ class _LayerScreenState extends State<LayerScreen> {
   ScrollController scrollController;
   bool isSubScreenShown = false;
   PersistentBottomSheetController bottomSheet;
+  Layers layers;
 
+  bool firstEvaluation = true;
   @override
   void initState() {
     super.initState();
 
     this.scrollController = ScrollController();
+
+    WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) {
+      if (firstEvaluation) {
+        firstEvaluation = false;
+        evaluateLayers(layers);
+      }
+    });
   }
 
   void scrollToBottom() {
@@ -41,7 +50,7 @@ class _LayerScreenState extends State<LayerScreen> {
   @override
   Widget build(BuildContext context) {
     // Geting the Layers from the Provider:
-    Layers layers = Provider.of<Layers>(context);
+    layers = Provider.of<Layers>(context);
 
     return MaterialApp(
       home: Scaffold(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
+import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
@@ -114,6 +115,8 @@ class NewLayerSelectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Layers layers = Provider.of<Layers>(context);
+
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
@@ -126,7 +129,10 @@ class NewLayerSelectionCard extends StatelessWidget {
           children: <Widget>[Text(this.layerName), Text("Layer")],
         ),
       ),
-      onTap: onSelected,
+      onTap: () {
+        onSelected();
+        evaluateLayers(layers);
+      },
     );
   }
 }

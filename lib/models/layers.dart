@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
+import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
@@ -80,5 +81,7 @@ class Layers extends ChangeNotifier {
     }
     print("oldIndex: $oldIndex, newIndex: $newIndex");
     updateElementIndices();
+    // update the evaluation of the Layers
+    evaluateLayers(this);
   }
 }

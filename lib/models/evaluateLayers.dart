@@ -16,8 +16,7 @@ void evaluateLayers(Layers layers) {
         layers.layerList[i] as DismissableListViewItem;
     LayerData layerData = disLvItem.layerData;
     imageData = layerData.passTrough(imageData);
-    print(
-        "${imageData.imageSize.w}x${imageData.imageSize.h}x${imageData.depth}");
+    //"${imageData.imageSize.w}x${imageData.imageSize.h}x${imageData.depth}"
     if (disLvItem.child is ConvLayerCard) {
       ConvLayerCard convLayerCard = disLvItem.child as ConvLayerCard;
       convLayerCard.convLayerData.outputImageData = imageData;
@@ -27,7 +26,6 @@ void evaluateLayers(Layers layers) {
       MaxPoolLayerCard maxPoolLayerCard = disLvItem.child as MaxPoolLayerCard;
       maxPoolLayerCard.maxPoolLayerData.outputImageData = imageData;
       maxPoolLayerCard.key.currentState.update();
-      print("Test");
     }
   }
 }

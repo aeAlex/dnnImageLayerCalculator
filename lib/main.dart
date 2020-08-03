@@ -13,8 +13,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Layers layers = Layers();
     return ChangeNotifierProvider(
-      create: (BuildContext context) => Layers(),
+      create: (BuildContext context) => layers,
       child: MaterialApp(home: LayerScreen()),
     );
   }
