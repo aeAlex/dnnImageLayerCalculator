@@ -4,6 +4,7 @@ import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/screens/newLayerSubScreen.dart';
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
+import 'package:imageshapecalculator/widgets/maxPoolLayerCard.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
 import 'package:provider/provider.dart';
@@ -112,6 +113,14 @@ class _LayerScreenState extends State<LayerScreen> {
           convLayerCard.convLayerData.outputImageData = imageData;
         });
         convLayerCard.key.currentState.update();
+      }
+      if (disLvItem.child is MaxPoolLayerCard) {
+        MaxPoolLayerCard maxPoolLayerCard = disLvItem.child as MaxPoolLayerCard;
+        setState(() {
+          maxPoolLayerCard.maxPoolLayerData.outputImageData = imageData;
+        });
+        maxPoolLayerCard.key.currentState.update();
+        print("Test");
       }
     }
   }

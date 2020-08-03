@@ -6,7 +6,9 @@ class MaxPoolingLayerData extends LayerData {
   Rectangle kernel;
   Rectangle stride;
 
-  MaxPoolingLayerData({this.kernel, this.stride});
+  MaxPoolingLayerData({this.kernel, this.stride}) {
+    outputImageData = ImageData(isDisplayed: false);
+  }
 
   @override
   ImageData passTrough(ImageData imageData) {

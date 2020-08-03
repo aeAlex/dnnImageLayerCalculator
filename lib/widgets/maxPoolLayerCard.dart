@@ -1,25 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
+import 'package:imageshapecalculator/widgets/outputImageDisplay.dart';
 
 import 'twoLineText.dart';
 
-class MaxPoolLayer extends StatelessWidget {
+class MaxPoolLayerCard extends StatefulWidget {
   static Color color = Color.fromARGB(255, 205, 231, 251);
   static AssetImage iconAssetImage = AssetImage('images/down.png');
 
-  final MaxPoolingLayerData maxPoolLayerData;
+  MaxPoolingLayerData maxPoolLayerData;
 
-  const MaxPoolLayer({
-    Key key,
+  final GlobalKey<MaxPoolLayerCardState> key;
+
+  MaxPoolLayerCard({
+    @required this.key,
     @required this.maxPoolLayerData,
   }) : super(key: key);
 
   @override
+  MaxPoolLayerCardState createState() => MaxPoolLayerCardState();
+}
+
+class MaxPoolLayerCardState extends State<MaxPoolLayerCard> {
+  double height;
+
+  void update() {
+    setState(() {
+      if (this.widget.maxPoolLayerData.outputImageData.isDisplayed) {
+        this.height = 118.0;
+      } else {
+        this.height = 81.0;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    this.update();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayerCardExterior(
-      height: 81,
-      color: MaxPoolLayer.color,
+      height: this.height,
+      color: MaxPoolLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -31,7 +58,7 @@ class MaxPoolLayer extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: 20.0),
               Image(
-                image: MaxPoolLayer.iconAssetImage,
+                image: MaxPoolLayerCard.iconAssetImage,
                 width: 50.0,
                 height: 50.0,
               ),
@@ -42,16 +69,20 @@ class MaxPoolLayer extends StatelessWidget {
                     TwoLineText(
                         textAbove: "Kernel:",
                         textBeneath:
-                            "${maxPoolLayerData.kernel.w}x${maxPoolLayerData.kernel.h}"),
+                            "${widget.maxPoolLayerData.kernel.w}x${widget.maxPoolLayerData.kernel.h}"),
                     TwoLineText(
                         textAbove: "Stride:",
                         textBeneath:
-                            "${maxPoolLayerData.stride.w}x${maxPoolLayerData.stride.h}"),
+                            "${widget.maxPoolLayerData.stride.w}x${widget.maxPoolLayerData.stride.h}"),
                   ],
                 ),
               ),
             ],
           ),
+          (this.widget.maxPoolLayerData.outputImageData.isDisplayed)
+              ? OutputImageDisplay(this.widget.maxPoolLayerData.outputImageData,
+                  color: Colors.deepPurpleAccent)
+              : Container(),
         ],
       ),
     );

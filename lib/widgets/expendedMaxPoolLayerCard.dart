@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
-import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
+import 'package:imageshapecalculator/widgets/maxPoolLayerCard.dart';
 
 import "layerCardExterior.dart";
 import 'labeledVectorInputField.dart';
@@ -17,7 +17,7 @@ class ExpandedMaxPoolLayerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayerCardExterior(
       height: 135.0,
-      color: MaxPoolLayer.color,
+      color: MaxPoolLayerCard.color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -29,7 +29,7 @@ class ExpandedMaxPoolLayerCard extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: 20.0),
               Image(
-                image: MaxPoolLayer.iconAssetImage,
+                image: MaxPoolLayerCard.iconAssetImage,
                 width: 50.0,
                 height: 50.0,
               ),

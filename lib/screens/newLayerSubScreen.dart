@@ -10,7 +10,7 @@ import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
 import 'package:provider/provider.dart';
 
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
-import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
+import 'package:imageshapecalculator/widgets/maxPoolLayerCard.dart';
 import 'package:imageshapecalculator/models/layers.dart';
 
 class NewLayerSubScreen extends StatelessWidget {
@@ -67,18 +67,21 @@ class NewLayerSubScreen extends StatelessWidget {
           SizedBox(width: 8.0),
           NewLayerSelectionCard(
             layerName: "Maxpool",
-            color: MaxPoolLayer.color,
+            color: MaxPoolLayerCard.color,
             onSelected: () {
               print("Maxpool-Layer was added");
 
               LayerData maxPoolLayerData = MaxPoolingLayerData(
-                  kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 1, h: 1));
+                  kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 2, h: 2));
+
+              GlobalKey<MaxPoolLayerCardState> maxPoolLayerKey = GlobalKey();
 
               layers.layerList.add(
                 DismissableListViewItem(
                   layerData: maxPoolLayerData,
-                  child: MaxPoolLayer(
+                  child: MaxPoolLayerCard(
                     maxPoolLayerData: maxPoolLayerData,
+                    key: maxPoolLayerKey,
                   ),
                   expandedChild: ExpandedMaxPoolLayerCard(
                     maxPoolLayerData: maxPoolLayerData,

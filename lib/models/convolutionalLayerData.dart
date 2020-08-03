@@ -7,7 +7,6 @@ class ConvolutionalLayerData extends LayerData {
   Rectangle kernel;
   Rectangle stride;
   int padding;
-  ImageData outputImageData;
 
   ConvolutionalLayerData(
       {this.anzFilter, this.kernel, this.stride, this.padding = 0}) {

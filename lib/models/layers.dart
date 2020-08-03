@@ -7,7 +7,7 @@ import 'package:imageshapecalculator/models/rectangle.dart';
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
-import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
+import 'package:imageshapecalculator/widgets/maxPoolLayerCard.dart';
 import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
@@ -29,6 +29,7 @@ class Layers extends ChangeNotifier {
       ImageData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
 
   GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
+  GlobalKey<MaxPoolLayerCardState> maxPoolLayerKey = GlobalKey();
 
   Layers() {
     this.layerList = <Widget>[
@@ -43,7 +44,10 @@ class Layers extends ChangeNotifier {
       ),
       DismissableListViewItem(
         layerData: maxPoolLayerData,
-        child: MaxPoolLayer(maxPoolLayerData: maxPoolLayerData),
+        child: MaxPoolLayerCard(
+          maxPoolLayerData: maxPoolLayerData,
+          key: maxPoolLayerKey,
+        ),
         expandedChild:
             ExpandedMaxPoolLayerCard(maxPoolLayerData: maxPoolLayerData),
         key: UniqueKey(),

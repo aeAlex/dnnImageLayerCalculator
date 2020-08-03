@@ -14,7 +14,7 @@ class ConvLayerCard extends StatefulWidget {
   final GlobalKey<ConvLayerCardState> key;
 
   ConvLayerCard({
-    this.key,
+    @required this.key,
     @required this.convLayerData,
   }) : super(key: key);
 
