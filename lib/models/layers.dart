@@ -23,7 +23,7 @@ class Layers extends ChangeNotifier {
       padding: 0);
 
   LayerData maxPoolLayerData = MaxPoolingLayerData(
-      kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 1, h: 1));
+      kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 2, h: 2));
 
   ImageData inputLayerData =
       ImageData(imageSize: Rectangle(w: 128, h: 128), depth: 3);

@@ -3,6 +3,7 @@ import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
+import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
 
@@ -11,8 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/maxPoolLayer.dart';
 import 'package:imageshapecalculator/models/layers.dart';
-
-import 'dismissableListViewItem.dart';
 
 class NewLayerSubScreen extends StatelessWidget {
   static double subScreenHight = 262;

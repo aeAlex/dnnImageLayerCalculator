@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/screens/newLayerSubScreen.dart';
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:imageshapecalculator/widgets/newLayerSubScreen.dart';
 import 'package:imageshapecalculator/models/layers.dart';
 
 class LayerScreen extends StatefulWidget {
