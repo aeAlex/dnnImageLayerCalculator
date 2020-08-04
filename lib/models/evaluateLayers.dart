@@ -20,12 +20,13 @@ void evaluateLayers(Layers layers) {
     if (disLvItem.child is ConvLayerCard) {
       ConvLayerCard convLayerCard = disLvItem.child as ConvLayerCard;
       convLayerCard.convLayerData.outputImageData = imageData;
-      convLayerCard.key.currentState.update();
+      convLayerCard.key.currentState?.update();
     }
     if (disLvItem.child is MaxPoolLayerCard) {
       MaxPoolLayerCard maxPoolLayerCard = disLvItem.child as MaxPoolLayerCard;
       maxPoolLayerCard.maxPoolLayerData.outputImageData = imageData;
-      maxPoolLayerCard.key.currentState.update();
+      MaxPoolLayerCardState state = maxPoolLayerCard.key.currentState;
+      if (state != null) state.update();
     }
   }
 }

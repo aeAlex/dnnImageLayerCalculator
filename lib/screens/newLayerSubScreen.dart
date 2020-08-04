@@ -44,9 +44,10 @@ class NewLayerSubScreen extends StatelessWidget {
               print("Convolution-Layer was added");
 
               LayerData convLayerData = ConvolutionalLayerData(
-                  anzFilter: 64,
-                  kernel: Rectangle(w: 3, h: 3),
-                  stride: Rectangle(w: 1, h: 1));
+                anzFilter: 64,
+                kernel: Rectangle(w: 3, h: 3),
+                stride: Rectangle(w: 1, h: 1),
+              );
 
               GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
 
