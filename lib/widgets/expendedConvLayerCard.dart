@@ -29,11 +29,7 @@ class ExpandedConvLayerCard extends StatelessWidget {
           Row(
             children: <Widget>[
               SizedBox(width: 20.0),
-              Image(
-                image: ConvLayerCard.iconAssetImage,
-                width: 50.0,
-                height: 50.0,
-              ),
+              ConvLayerCard.faIcon,
               SizedBox(width: 20.0),
               Expanded(
                 child: Column(

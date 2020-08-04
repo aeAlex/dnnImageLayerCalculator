@@ -29,11 +29,7 @@ class ExpandedInputImageCard extends StatelessWidget {
           Row(
             children: <Widget>[
               SizedBox(width: 20.0),
-              Image(
-                image: InputImageCard.iconAssetImage,
-                width: 50.0,
-                height: 50.0,
-              ),
+              InputImageCard.faIcon,
               SizedBox(width: 20.0),
               Expanded(
                 child: Column(

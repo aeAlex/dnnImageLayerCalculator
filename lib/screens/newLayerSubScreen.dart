@@ -60,6 +60,7 @@ class NewLayerSubScreen extends StatelessWidget {
                       ExpandedConvLayerCard(convLayerData: convLayerData),
                   key: UniqueKey(),
                   onDismissed: (index) => layers.dismissElement(index),
+                  onCopy: (index, item) => layers.copyElement(index, item),
                   index: layers.layerList.length,
                 ),
               );
@@ -90,6 +91,7 @@ class NewLayerSubScreen extends StatelessWidget {
                   ),
                   key: UniqueKey(),
                   onDismissed: (index) => layers.dismissElement(index),
+                  onCopy: (index, item) => layers.copyElement(index, item),
                   index: layers.layerList.length,
                 ),
               );

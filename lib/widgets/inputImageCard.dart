@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/widgets/layerCardExterior.dart';
 
@@ -6,7 +7,10 @@ import 'twoLineText.dart';
 
 class InputImageCard extends StatelessWidget {
   static Color color = Color.fromARGB(255, 255, 237, 133);
-  static AssetImage iconAssetImage = AssetImage('images/enter.png');
+  static FaIcon faIcon = FaIcon(
+    FontAwesomeIcons.images,
+    size: 50,
+  );
 
   final ImageData inputLayerData;
 
@@ -30,11 +34,7 @@ class InputImageCard extends StatelessWidget {
           Row(
             children: <Widget>[
               SizedBox(width: 20.0),
-              Image(
-                image: InputImageCard.iconAssetImage,
-                width: 50.0,
-                height: 50.0,
-              ),
+              InputImageCard.faIcon,
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

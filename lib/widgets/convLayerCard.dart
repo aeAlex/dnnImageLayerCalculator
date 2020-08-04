@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 
 import "layerCardExterior.dart";
@@ -7,7 +8,10 @@ import 'twoLineText.dart';
 
 class ConvLayerCard extends StatefulWidget {
   static Color color = Color.fromARGB(255, 230, 207, 255);
-  static AssetImage iconAssetImage = AssetImage('images/filter.png');
+  static FaIcon faIcon = FaIcon(
+    FontAwesomeIcons.filter,
+    size: 50,
+  );
 
   ConvolutionalLayerData convLayerData;
 
@@ -57,11 +61,7 @@ class ConvLayerCardState extends State<ConvLayerCard> {
           Row(
             children: <Widget>[
               SizedBox(width: 20.0),
-              Image(
-                image: ConvLayerCard.iconAssetImage,
-                width: 50.0,
-                height: 50.0,
-              ),
+              ConvLayerCard.faIcon,
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
