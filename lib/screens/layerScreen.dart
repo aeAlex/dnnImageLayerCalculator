@@ -76,17 +76,16 @@ class _LayerScreenState extends State<LayerScreen> {
                 (this.isSubScreenShown)
                     ? SizedBox(height: NewLayerSubScreen.subScreenHight)
                     : Container(
-                        decoration: BoxDecoration(color: Colors.blue),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFDDDDDD),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            RaisedButton(
-                              onPressed: () {
-                                print(layers.layerList.length);
-                                evaluateLayers(layers);
-                              },
-                              child: Text("evaluate"),
-                            ),
                             NewLayerButton(parrent: this),
                           ],
                         ),
@@ -107,21 +106,38 @@ class NewLayerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      onPressed: () {
-        this.parrent.bottomSheet = showBottomSheet(
-          context: context,
-          builder: (context) =>
-              NewLayerSubScreen(updateUiFunction: this.parrent.scrollToBottom),
-        );
-        this.parrent.setIsSubScreenShown(true);
-        this
-            .parrent
-            .bottomSheet
-            .closed
-            .then((value) => this.parrent.setIsSubScreenShown(false));
-      },
-      child: Text("new Layer"),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black45,
+              blurRadius: 2.0,
+              spreadRadius: 2.0,
+              offset: Offset(2.0, 2.0)),
+        ],
+      ),
+      margin: EdgeInsets.all(10.0),
+      child: FlatButton(
+        onPressed: () {
+          this.parrent.bottomSheet = showBottomSheet(
+            context: context,
+            builder: (context) => NewLayerSubScreen(
+                updateUiFunction: this.parrent.scrollToBottom),
+          );
+          this.parrent.setIsSubScreenShown(true);
+          this
+              .parrent
+              .bottomSheet
+              .closed
+              .then((value) => this.parrent.setIsSubScreenShown(false));
+        },
+        child: Text(
+          "new Layer",
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
+      ),
     );
   }
 }
