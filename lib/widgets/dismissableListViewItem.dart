@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/layers.dart';
@@ -51,9 +52,33 @@ class _DismissableListViewItemState extends State<DismissableListViewItem> {
             evaluateLayers(layers);
           },
           child: (this.isExpanded) ? widget.expandedChild : widget.child),
-      background: Container(color: Colors.transparent),
+      background: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            FaIcon(
+              FontAwesomeIcons.copy,
+              size: 50,
+            ),
+          ],
+        ),
+        padding: EdgeInsets.only(left: 20.0),
+      ),
+      secondaryBackground: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            FaIcon(
+              FontAwesomeIcons.trash,
+              size: 50,
+            ),
+          ],
+        ),
+        padding: EdgeInsets.only(right: 20.0),
+      ),
       key: UniqueKey(),
       onDismissed: (direction) => this.widget.onDismissed(this.widget.index),
+      direction: DismissDirection.horizontal,
     );
   }
 }
