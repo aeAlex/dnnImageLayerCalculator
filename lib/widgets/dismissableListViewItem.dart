@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/models/layers.dart';
+import 'package:provider/provider.dart';
 
 class DismissableListViewItem extends StatefulWidget {
   final Widget child;
@@ -43,9 +46,12 @@ class _DismissableListViewItemState extends State<DismissableListViewItem> {
             setState(() {
               this.isExpanded = !this.isExpanded;
             });
+            // reevaluate the layers after tap
+            Layers layers = Provider.of<Layers>(context, listen: false);
+            evaluateLayers(layers);
           },
           child: (this.isExpanded) ? widget.expandedChild : widget.child),
-      background: Container(color: Colors.lightGreenAccent),
+      background: Container(color: Colors.transparent),
       key: UniqueKey(),
       onDismissed: (direction) => this.widget.onDismissed(this.widget.index),
     );

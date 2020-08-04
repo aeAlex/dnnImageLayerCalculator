@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
+import 'package:imageshapecalculator/models/evaluateLayers.dart';
+import 'package:imageshapecalculator/models/layers.dart';
 import 'package:imageshapecalculator/widgets/expandedInputImageCard.dart';
+import 'package:provider/provider.dart';
 
 import 'inputImageCard.dart';
 
@@ -39,6 +42,9 @@ class _ToggleableInputLayerState extends State<ToggleableInputLayer> {
         setState(() {
           this.isExtended = !this.isExtended;
         });
+        // reevaluate the layers after tap
+        Layers layers = Provider.of<Layers>(context, listen: false);
+        evaluateLayers(layers);
       },
     );
   }
