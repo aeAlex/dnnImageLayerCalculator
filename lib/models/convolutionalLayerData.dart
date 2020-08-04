@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/models/layers.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
+import 'package:imageshapecalculator/widgets/convLayerCard.dart';
+import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
+import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 
 class ConvolutionalLayerData extends LayerData {
   int anzFilter;
@@ -26,5 +31,31 @@ class ConvolutionalLayerData extends LayerData {
         1;
     return ImageData(
         imageSize: Rectangle(w: width, h: height), depth: this.anzFilter);
+  }
+
+  @override
+  LayerData copyLayerData() {
+    return ConvolutionalLayerData(
+      anzFilter: this.anzFilter,
+      kernel: Rectangle(w: this.kernel.w, h: this.kernel.h),
+      stride: Rectangle(w: this.stride.w, h: this.stride.h),
+      padding: this.padding,
+    );
+  }
+
+  @override
+  DismissableListViewItem copyLayer(Layers layers) {
+    ConvolutionalLayerData convLayerData = this.copyLayerData();
+    GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
+
+    return DismissableListViewItem(
+      layerData: convLayerData,
+      child: ConvLayerCard(key: conLayerKey, convLayerData: convLayerData),
+      expandedChild: ExpandedConvLayerCard(convLayerData: convLayerData),
+      key: UniqueKey(),
+      onDismissed: (index) => layers.dismissElement(index),
+      onCopy: (index, item) => layers.copyElement(index, item),
+      index: 1,
+    );
   }
 }

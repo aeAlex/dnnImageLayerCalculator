@@ -4,7 +4,6 @@ import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
-
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
@@ -16,6 +15,7 @@ import 'convolutionalLayerData.dart';
 
 class Layers extends ChangeNotifier {
   List<Widget> layerList;
+  Function updateUiFunction;
 
   LayerData convLayerData = ConvolutionalLayerData(
       anzFilter: 64,
@@ -41,6 +41,7 @@ class Layers extends ChangeNotifier {
         expandedChild: ExpandedConvLayerCard(convLayerData: convLayerData),
         key: UniqueKey(),
         onDismissed: (index) => this.dismissElement(index),
+        onCopy: (index, item) => this.copyElement(index, item),
         index: 1,
       ),
       DismissableListViewItem(
@@ -53,9 +54,14 @@ class Layers extends ChangeNotifier {
             ExpandedMaxPoolLayerCard(maxPoolLayerData: maxPoolLayerData),
         key: UniqueKey(),
         onDismissed: (index) => this.dismissElement(index),
+        onCopy: (index, item) => this.copyElement(index, item),
         index: 2,
       ),
     ];
+  }
+
+  void setUpdateUiFunction(Function updateUiFunction) {
+    this.updateUiFunction = updateUiFunction;
   }
 
   void updateElementIndices() {
@@ -68,6 +74,17 @@ class Layers extends ChangeNotifier {
     this.layerList.removeAt(index);
     updateElementIndices();
     evaluateLayers(this);
+  }
+
+  void copyElement(index, DismissableListViewItem item) {
+    // copy the Element:
+    print("Copying Layer");
+    DismissableListViewItem newItem = item.layerData.copyLayer(this);
+    this.layerList.insert(index + 1, newItem);
+    updateElementIndices();
+    if (this.updateUiFunction == null) print("Update UI Function was null");
+    evaluateLayers(this);
+    this.updateUiFunction?.call();
   }
 
   void reorderElements(int oldIndex, int newIndex) {

@@ -28,9 +28,9 @@ class ConvLayerCardState extends State<ConvLayerCard> {
   void update() {
     setState(() {
       if (this.widget.convLayerData.outputImageData.isDisplayed) {
-        this.height = 118.0;
+        this.height = 133.0;
       } else {
-        this.height = 81.0;
+        this.height = 90.0;
       }
     });
   }

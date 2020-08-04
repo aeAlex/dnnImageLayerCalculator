@@ -27,7 +27,7 @@ class LayerCardExterior extends StatelessWidget {
           ),
         ],
       ),
-      margin: const EdgeInsets.only(bottom: 8.0),
+      margin: const EdgeInsets.only(bottom: 12.0),
       padding: const EdgeInsets.all(6.0),
       height: height,
     );

@@ -9,6 +9,7 @@ class DismissableListViewItem extends StatefulWidget {
   final Widget child;
   final Widget expandedChild;
   final Function onDismissed;
+  final Function onCopy;
   final bool isInitiallyExpanded;
   int index;
   final LayerData layerData;
@@ -21,6 +22,7 @@ class DismissableListViewItem extends StatefulWidget {
     @required this.index,
     @required this.layerData,
     this.isInitiallyExpanded = false,
+    @required this.onCopy,
   }) : super(key: key);
 
   @override
@@ -51,34 +53,34 @@ class _DismissableListViewItemState extends State<DismissableListViewItem> {
             Layers layers = Provider.of<Layers>(context, listen: false);
             evaluateLayers(layers);
           },
+          onDoubleTap: () {
+            this.widget.onCopy(this.widget.index, widget);
+          },
           child: (this.isExpanded) ? widget.expandedChild : widget.child),
-      background: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            FaIcon(
-              FontAwesomeIcons.copy,
-              size: 50,
-            ),
-          ],
-        ),
-        padding: EdgeInsets.only(left: 20.0),
-      ),
-      secondaryBackground: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            FaIcon(
-              FontAwesomeIcons.trash,
-              size: 50,
-            ),
-          ],
-        ),
-        padding: EdgeInsets.only(right: 20.0),
-      ),
+      background:
+          getDeleteIcon(MainAxisAlignment.start, EdgeInsets.only(left: 20.0)),
+      secondaryBackground:
+          getDeleteIcon(MainAxisAlignment.end, EdgeInsets.only(right: 20.0)),
       key: UniqueKey(),
-      onDismissed: (direction) => this.widget.onDismissed(this.widget.index),
+      onDismissed: (DismissDirection direction) =>
+          this.widget.onDismissed(this.widget.index),
       direction: DismissDirection.horizontal,
+    );
+  }
+
+  Container getDeleteIcon(
+      MainAxisAlignment mainAxisAlignment, EdgeInsets edgeInsets) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: mainAxisAlignment,
+        children: <Widget>[
+          FaIcon(
+            FontAwesomeIcons.trash,
+            size: 50,
+          ),
+        ],
+      ),
+      padding: edgeInsets,
     );
   }
 }

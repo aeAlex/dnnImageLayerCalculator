@@ -47,10 +47,15 @@ class _LayerScreenState extends State<LayerScreen> {
     });
   }
 
+  updateUi() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // Geting the Layers from the Provider:
     layers = Provider.of<Layers>(context);
+    layers.setUpdateUiFunction(updateUi);
 
     return MaterialApp(
       home: Scaffold(
@@ -62,15 +67,18 @@ class _LayerScreenState extends State<LayerScreen> {
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: ReorderableListView(
-                    padding: const EdgeInsets.all(8.0),
-                    onReorder: (int oldIndex, int newIndex) {
-                      setState(() {
-                        layers.reorderElements(oldIndex, newIndex);
-                      });
-                    },
-                    children: layers.layerList,
-                    scrollController: this.scrollController,
+                  child: Theme(
+                    data: ThemeData(canvasColor: Colors.transparent),
+                    child: ReorderableListView(
+                      padding: const EdgeInsets.all(8.0),
+                      onReorder: (int oldIndex, int newIndex) {
+                        setState(() {
+                          layers.reorderElements(oldIndex, newIndex);
+                        });
+                      },
+                      children: layers.layerList,
+                      scrollController: this.scrollController,
+                    ),
                   ),
                 ),
                 (this.isSubScreenShown)

@@ -28,9 +28,9 @@ class MaxPoolLayerCardState extends State<MaxPoolLayerCard> {
   void update() {
     setState(() {
       if (this.widget.maxPoolLayerData.outputImageData.isDisplayed) {
-        this.height = 118.0;
+        this.height = 128.0;
       } else {
-        this.height = 81.0;
+        this.height = 91.0;
       }
     });
   }
