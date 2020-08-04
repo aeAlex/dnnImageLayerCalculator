@@ -67,6 +67,7 @@ class Layers extends ChangeNotifier {
   void dismissElement(int index) {
     this.layerList.removeAt(index);
     updateElementIndices();
+    evaluateLayers(this);
   }
 
   void reorderElements(int oldIndex, int newIndex) {

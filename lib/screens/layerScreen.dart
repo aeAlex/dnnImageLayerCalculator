@@ -82,6 +82,7 @@ class _LayerScreenState extends State<LayerScreen> {
                           children: <Widget>[
                             RaisedButton(
                               onPressed: () {
+                                print(layers.layerList.length);
                                 evaluateLayers(layers);
                               },
                               child: Text("evaluate"),
