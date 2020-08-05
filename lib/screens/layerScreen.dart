@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/constants.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
+import 'package:imageshapecalculator/models/saveModel.dart';
 import 'package:imageshapecalculator/screens/newLayerSubScreen.dart';
 
 import 'package:provider/provider.dart';
@@ -94,7 +96,8 @@ class _LayerScreenState extends State<LayerScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            NewLayerButton(parrent: this),
+                            SaveModelsButton(parent: this),
+                            NewLayerButton(parent: this),
                           ],
                         ),
                       )
@@ -107,39 +110,100 @@ class _LayerScreenState extends State<LayerScreen> {
   }
 }
 
-class NewLayerButton extends StatelessWidget {
-  final _LayerScreenState parrent;
+class SaveModelsButton extends StatefulWidget {
+  final _LayerScreenState parent;
 
-  const NewLayerButton({Key key, @required this.parrent}) : super(key: key);
+  const SaveModelsButton({
+    Key key,
+    @required this.parent,
+  }) : super(key: key);
+
+  @override
+  _SaveModelsButtonState createState() => _SaveModelsButtonState();
+}
+
+class _SaveModelsButtonState extends State<SaveModelsButton> {
+  TextEditingController textFieldController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    textFieldController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textFieldController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black45,
-              blurRadius: 2.0,
-              spreadRadius: 2.0,
-              offset: Offset(2.0, 2.0)),
-        ],
+      decoration: LayerScreenBottomButtonBoxDecoration,
+      child: FlatButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  title: Text("Do you want to save the Model?"),
+                  content: TextField(
+                    decoration: InputDecoration(hintText: "Name of your Model"),
+                    controller: textFieldController,
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("cancel"),
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("save"),
+                      onPressed: () {
+                        String modelName = textFieldController.text;
+                        saveModel(this.widget.parent.layers, modelName);
+                        Navigator.of(ctx).pop();
+                      },
+                    ),
+                  ],
+                );
+              });
+        },
+        child: Text(
+          "Save Model",
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
       ),
+    );
+  }
+}
+
+class NewLayerButton extends StatelessWidget {
+  final _LayerScreenState parent;
+
+  const NewLayerButton({Key key, @required this.parent}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: LayerScreenBottomButtonBoxDecoration,
       margin: EdgeInsets.all(10.0),
       child: FlatButton(
         onPressed: () {
-          this.parrent.bottomSheet = showBottomSheet(
+          this.parent.bottomSheet = showBottomSheet(
             context: context,
-            builder: (context) => NewLayerSubScreen(
-                updateUiFunction: this.parrent.scrollToBottom),
+            builder: (context) =>
+                NewLayerSubScreen(updateUiFunction: this.parent.scrollToBottom),
           );
-          this.parrent.setIsSubScreenShown(true);
+          this.parent.setIsSubScreenShown(true);
           this
-              .parrent
+              .parent
               .bottomSheet
               .closed
-              .then((value) => this.parrent.setIsSubScreenShown(false));
+              .then((value) => this.parent.setIsSubScreenShown(false));
         },
         child: Text(
           "new Layer",
