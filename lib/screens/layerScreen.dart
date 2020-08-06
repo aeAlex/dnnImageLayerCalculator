@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/constants.dart';
+import 'package:imageshapecalculator/main.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
-import 'package:imageshapecalculator/models/saveModel.dart';
+import 'package:imageshapecalculator/models/layerDB.dart';
 import 'package:imageshapecalculator/screens/newLayerSubScreen.dart';
 
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class _LayerScreenState extends State<LayerScreen> {
   bool isSubScreenShown = false;
   PersistentBottomSheetController bottomSheet;
   Layers layers;
+  LayerDB layerDB;
 
   bool firstEvaluation = true;
   @override
@@ -56,7 +58,9 @@ class _LayerScreenState extends State<LayerScreen> {
   @override
   Widget build(BuildContext context) {
     // Geting the Layers from the Provider:
-    layers = Provider.of<Layers>(context);
+    ProviderData providerData = Provider.of<ProviderData>(context);
+    this.layerDB = providerData.layerDB;
+    this.layers = providerData.layers;
     layers.setUpdateUiFunction(updateUi);
 
     return MaterialApp(
@@ -96,7 +100,7 @@ class _LayerScreenState extends State<LayerScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            SaveModelsButton(parent: this),
+                            SaveModelsButton(parent: this, layerDB: layerDB),
                             NewLayerButton(parent: this),
                           ],
                         ),
@@ -110,12 +114,15 @@ class _LayerScreenState extends State<LayerScreen> {
   }
 }
 
+//TODO: Auslagern
 class SaveModelsButton extends StatefulWidget {
   final _LayerScreenState parent;
+  final LayerDB layerDB;
 
   const SaveModelsButton({
     Key key,
     @required this.parent,
+    @required this.layerDB,
   }) : super(key: key);
 
   @override
@@ -164,7 +171,13 @@ class _SaveModelsButtonState extends State<SaveModelsButton> {
                       child: Text("save"),
                       onPressed: () {
                         String modelName = textFieldController.text;
-                        saveModel(this.widget.parent.layers, modelName);
+                        if (modelName == null) {
+                          modelName = "nameless";
+                        }
+                        this
+                            .widget
+                            .layerDB
+                            .saveModel(this.widget.parent.layers, modelName);
                         Navigator.of(ctx).pop();
                       },
                     ),

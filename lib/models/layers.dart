@@ -13,7 +13,7 @@ import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
 import 'convolutionalLayerData.dart';
 
-class Layers extends ChangeNotifier {
+class Layers {
   List<Widget> layerList;
   Function updateUiFunction;
 

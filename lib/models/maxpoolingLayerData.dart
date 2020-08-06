@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
+import 'package:imageshapecalculator/models/layerDB.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/layers.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
@@ -13,6 +14,7 @@ class MaxPoolingLayerData extends LayerData {
 
   MaxPoolingLayerData({this.kernel, this.stride}) {
     outputImageData = ImageData(isDisplayed: false);
+    this.layerType = LayerType.MaxPoolLayer;
   }
 
   @override
@@ -49,6 +51,11 @@ class MaxPoolingLayerData extends LayerData {
       onCopy: (index, item) => layers.copyElement(index, item),
       index: 1,
     );
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {'kernel': this.kernel, 'stride': this.stride};
   }
 
   // TODO: Implement that the default values are the of the last same layer

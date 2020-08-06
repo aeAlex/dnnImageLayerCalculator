@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imageshapecalculator/main.dart';
 import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
@@ -25,8 +26,8 @@ class NewLayerSubScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Layers layers = Provider.of<Layers>(context);
-
+    ProviderData providerData = Provider.of<ProviderData>(context);
+    Layers layers = providerData.layers;
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFFDDDDDD),
@@ -118,8 +119,8 @@ class NewLayerSelectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Layers layers = Provider.of<Layers>(context);
-
+    ProviderData providerData = Provider.of<ProviderData>(context);
+    Layers layers = providerData.layers;
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(

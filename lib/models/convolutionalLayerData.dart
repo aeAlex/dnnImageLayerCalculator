@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imageshapecalculator/models/ImageData.dart';
+import 'package:imageshapecalculator/models/layerDB.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/layers.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
@@ -16,6 +17,7 @@ class ConvolutionalLayerData extends LayerData {
   ConvolutionalLayerData(
       {this.anzFilter, this.kernel, this.stride, this.padding = 0}) {
     outputImageData = ImageData(isDisplayed: false);
+    this.layerType = LayerType.ConvolutionalLayer;
   }
 
   @override
@@ -57,5 +59,15 @@ class ConvolutionalLayerData extends LayerData {
       onCopy: (index, item) => layers.copyElement(index, item),
       index: 1,
     );
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'anzFilter': this.anzFilter,
+      'padding': this.padding,
+      'stride': this.stride,
+      'kernel': this.kernel
+    };
   }
 }
