@@ -1,5 +1,7 @@
 import 'package:imageshapecalculator/models/ImageData.dart';
+import 'package:imageshapecalculator/models/convolutionalLayerData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
+import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
 import 'package:imageshapecalculator/models/savedModelData.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
@@ -85,18 +87,16 @@ class LayerDB {
         // Replace the Rectangles with ids:
         layerMapWithRectangles.forEach((key, value) async {
           if (!(layerMapWithRectangles[key] is Rectangle)) {
-            print("$key is not a Rectangle");
             layerMap[key] = value;
           }
         });
-        print("layerMap before: $layerMap");
         layerMap['kernel_id'] =
             await _createReactangle(layerMapWithRectangles['kernel']);
         layerMap['stride_id'] =
             await _createReactangle(layerMapWithRectangles['stride']);
         layerMap['layerType_id'] = layerData.layerType.index;
         layerMap['model_id'] = modelId;
-        print("layerMap: $layerMap");
+
         // Saving in Database:
         db.insert('layer', layerMap);
       } else {
@@ -105,7 +105,6 @@ class LayerDB {
     }
 
     final List<Map<String, dynamic>> maps = await db.query('layer');
-    print(maps);
   }
 
   Future<List<SavedModelData>> queryModelDataList() async {
@@ -142,9 +141,6 @@ class LayerDB {
 
     db.insert("model", modelMap);
 
-    final List<Map<String, dynamic>> maps = await db.query('model');
-    print(maps);
-
     return modelId;
   }
 
@@ -166,9 +162,6 @@ class LayerDB {
 
     db.insert('image', imageMap);
 
-    final List<Map<String, dynamic>> maps = await db.query('image');
-    print(maps);
-
     return imageId;
   }
 
@@ -181,9 +174,6 @@ class LayerDB {
     rectangleMap["rectangle_id"] = index;
 
     db.insert('rectangle', rectangleMap);
-
-    final List<Map<String, dynamic>> maps = await db.query('rectangle');
-    print(maps);
 
     return index;
   }
@@ -198,7 +188,7 @@ class LayerDB {
     return index;
   }
 
-  Future<ImageData> queryInputImage(int inputImageId) async {
+  Future<ImageData> queryInputImageFromId(int inputImageId) async {
     Database db = await this.futureDB;
 
     // query Data From Image
@@ -220,10 +210,49 @@ class LayerDB {
     // query Data from Rectangle
     List<Map<String, dynamic>> rectangleMapList = await db.query('rectangle',
         where: "rectangle_id = ?", whereArgs: [rectangleId], limit: 1);
-    print(rectangleMapList);
+
     Map<String, dynamic> rectangleMap = rectangleMapList[0];
     return Rectangle(w: rectangleMap['width'], h: rectangleMap['height']);
   }
+
+  Future<List<LayerData>> queryLayerDataFromId(int modelId) async {
+    Database db = await this.futureDB;
+    List<LayerData> layerDataList = <LayerData>[];
+
+    // query Data from Layer
+    List<Map<String, dynamic>> layerMapList =
+        await db.query('layer', where: "model_id = ?", whereArgs: [modelId]);
+
+    for (Map<String, dynamic> map in layerMapList) {
+      LayerType layerType = getLayerTypeFromId(map['layerType_id']);
+      Rectangle kernel = await _queryRectangleFromID(map['kernel_id']);
+      Rectangle stride = await _queryRectangleFromID(map['stride_id']);
+      int padding = map['padding'];
+      int anzFilter = map['anzFilter'];
+
+      switch (layerType) {
+        case LayerType.ConvolutionalLayer:
+          LayerData layerData = ConvolutionalLayerData(
+              kernel: kernel,
+              stride: stride,
+              padding: padding,
+              anzFilter: anzFilter);
+          layerDataList.add(layerData);
+          break;
+        case LayerType.MaxPoolLayer:
+          LayerData layerData =
+              MaxPoolingLayerData(kernel: kernel, stride: stride);
+          layerDataList.add(layerData);
+          break;
+      }
+    }
+
+    return layerDataList;
+  }
+}
+
+LayerType getLayerTypeFromId(int id) {
+  return LayerType.values[id];
 }
 
 enum LayerType { ConvolutionalLayer, MaxPoolLayer }

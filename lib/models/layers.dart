@@ -19,22 +19,22 @@ class Layers {
   List<Widget> layerList;
   Function updateUiFunction;
 
-  LayerData convLayerData = ConvolutionalLayerData(
-      anzFilter: 64,
-      kernel: Rectangle(w: 3, h: 3),
-      stride: Rectangle(w: 1, h: 1),
-      padding: 0);
-
-  LayerData maxPoolLayerData = MaxPoolingLayerData(
-      kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 2, h: 2));
-
-  ImageData inputLayerData =
-      ImageData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
-
-  GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
-  GlobalKey<MaxPoolLayerCardState> maxPoolLayerKey = GlobalKey();
-
   Layers() {
+    LayerData convLayerData = ConvolutionalLayerData(
+        anzFilter: 64,
+        kernel: Rectangle(w: 3, h: 3),
+        stride: Rectangle(w: 1, h: 1),
+        padding: 0);
+
+    LayerData maxPoolLayerData = MaxPoolingLayerData(
+        kernel: Rectangle(w: 2, h: 2), stride: Rectangle(w: 2, h: 2));
+
+    ImageData inputLayerData =
+        ImageData(imageSize: Rectangle(w: 128, h: 128), depth: 3);
+
+    GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
+    GlobalKey<MaxPoolLayerCardState> maxPoolLayerKey = GlobalKey();
+
     this.layerList = <Widget>[
       ToggleableInputLayer(key: UniqueKey(), inputLayerData: inputLayerData),
       DismissableListViewItem(
@@ -110,15 +110,71 @@ class Layers {
     SavedModelData savedModelData = await futureSavedModelData;
     // Create the ToggleableInputLayer from the saved Data
     ImageData inputImage =
-        await layerDB.queryInputImage(savedModelData.inputImageId);
+        await layerDB.queryInputImageFromId(savedModelData.inputImageId);
 
     this.layerList = <Widget>[
       ToggleableInputLayer(key: UniqueKey(), inputLayerData: inputImage),
     ];
 
     // Create the DismissibleListViewItems from the Saved Data
+    List<LayerData> layerDataList =
+        await layerDB.queryLayerDataFromId(savedModelData.modelId);
+
+    print("test, ${layerDataList.length}");
+    layerDataList.forEach((LayerData layerData) {
+      print("adding Layer");
+      if (layerData is ConvolutionalLayerData) {
+        print("add Conv Layer");
+        _addConvolutionalLayer(layerData);
+      } else if (layerData is MaxPoolingLayerData) {
+        _addMaxPoolLayer(layerData);
+      }
+    });
 
     this.updateElementIndices();
+    evaluateLayers(this);
     this.updateUiFunction?.call();
+  }
+
+  _addMaxPoolLayer(MaxPoolingLayerData layerData) {
+    GlobalKey<MaxPoolLayerCardState> maxPoolLayerKey = GlobalKey();
+    this.layerList.add(
+          DismissableListViewItem(
+            layerData: layerData,
+            child: MaxPoolLayerCard(
+              maxPoolLayerData: layerData,
+              key: maxPoolLayerKey,
+            ),
+            expandedChild: ExpandedMaxPoolLayerCard(
+              maxPoolLayerData: layerData,
+              key: maxPoolLayerKey,
+            ),
+            key: UniqueKey(),
+            onDismissed: (index) => this.dismissElement(index),
+            onCopy: (index, item) => this.copyElement(index, item),
+            index: this.layerList.length,
+          ),
+        );
+  }
+
+  _addConvolutionalLayer(ConvolutionalLayerData layerData) {
+    GlobalKey<ConvLayerCardState> conLayerKey = GlobalKey();
+    this.layerList.add(
+          DismissableListViewItem(
+            layerData: layerData,
+            child: ConvLayerCard(
+              convLayerData: layerData,
+              key: conLayerKey,
+            ),
+            expandedChild: ExpandedConvLayerCard(
+              convLayerData: layerData,
+              key: conLayerKey,
+            ),
+            key: UniqueKey(),
+            onDismissed: (index) => this.dismissElement(index),
+            onCopy: (index, item) => this.copyElement(index, item),
+            index: this.layerList.length,
+          ),
+        );
   }
 }
