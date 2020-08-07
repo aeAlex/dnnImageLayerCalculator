@@ -1,6 +1,7 @@
 import 'package:imageshapecalculator/models/ImageData.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
+import 'package:imageshapecalculator/models/savedModelData.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 import 'package:sqflite/sqflite.dart';
@@ -107,6 +108,26 @@ class LayerDB {
     print(maps);
   }
 
+  Future<List<SavedModelData>> queryModelDataList() async {
+    Database db = await this.futureDB;
+    List<Map<String, dynamic>> modelMap = await db.query('model');
+    List<SavedModelData> savedModelDataList = <SavedModelData>[];
+
+    modelMap.forEach((Map<String, dynamic> map) {
+      int modelId = map['model_id'];
+      int inputImageId = map['inputImage_id'];
+      String name = map['name'];
+      String creationTimeString = map['creationTime'];
+      savedModelDataList.add(SavedModelData(
+          modelId: modelId,
+          inputImageId: inputImageId,
+          name: name,
+          creationTimeString: creationTimeString));
+    });
+
+    return savedModelDataList;
+  }
+
   Future<int> _createModelAndInputImage(Layers layers, String name) async {
     Database db = await this.futureDB;
 
@@ -167,6 +188,7 @@ class LayerDB {
     return index;
   }
 
+  // TODO: CREATE A DATABASEHELPER
   Future<int> _getCurrentIndex(String tableName, String tableID) async {
     Database db = await this.futureDB;
     Map<String, dynamic> maxIndexMap = (await db
@@ -174,6 +196,33 @@ class LayerDB {
     int maxIndex = maxIndexMap['maxIndex'];
     int index = (maxIndex == null) ? 1 : maxIndex + 1;
     return index;
+  }
+
+  Future<ImageData> queryInputImage(int inputImageId) async {
+    Database db = await this.futureDB;
+
+    // query Data From Image
+    List<Map<String, dynamic>> imageMapList = await db.query('image',
+        where: "image_id = ?", whereArgs: [inputImageId], limit: 1);
+
+    Map<String, dynamic> imageMap = imageMapList[0];
+    int imageSizeId = imageMap['imageSize_id'];
+    int depth = imageMap['depth'];
+
+    Rectangle imageSize = await _queryRectangleFromID(imageSizeId);
+
+    return ImageData(imageSize: imageSize, depth: depth);
+  }
+
+  Future<Rectangle> _queryRectangleFromID(int rectangleId) async {
+    Database db = await this.futureDB;
+
+    // query Data from Rectangle
+    List<Map<String, dynamic>> rectangleMapList = await db.query('rectangle',
+        where: "rectangle_id = ?", whereArgs: [rectangleId], limit: 1);
+    print(rectangleMapList);
+    Map<String, dynamic> rectangleMap = rectangleMapList[0];
+    return Rectangle(w: rectangleMap['width'], h: rectangleMap['height']);
   }
 }
 

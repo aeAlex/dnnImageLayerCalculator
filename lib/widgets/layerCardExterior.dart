@@ -6,10 +6,7 @@ class LayerCardExterior extends StatelessWidget {
   final double height;
 
   const LayerCardExterior(
-      {Key key,
-      @required this.child,
-      @required this.color,
-      @required this.height})
+      {Key key, @required this.child, @required this.color, this.height})
       : super(key: key);
 
   @override

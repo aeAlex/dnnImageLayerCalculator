@@ -4,6 +4,7 @@ import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/maxpoolingLayerData.dart';
 import 'package:imageshapecalculator/models/rectangle.dart';
+import 'package:imageshapecalculator/models/savedModelData.dart';
 import 'package:imageshapecalculator/widgets/convLayerCard.dart';
 import 'package:imageshapecalculator/widgets/dismissableListViewItem.dart';
 import 'package:imageshapecalculator/widgets/expendedMaxPoolLayerCard.dart';
@@ -12,6 +13,7 @@ import 'package:imageshapecalculator/widgets/expendedConvLayerCard.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
 import 'convolutionalLayerData.dart';
+import 'layerDB.dart';
 
 class Layers {
   List<Widget> layerList;
@@ -101,5 +103,22 @@ class Layers {
     updateElementIndices();
     // update the evaluation of the Layers
     evaluateLayers(this);
+  }
+
+  void loadLayersFromSavedModelData(
+      Future futureSavedModelData, LayerDB layerDB) async {
+    SavedModelData savedModelData = await futureSavedModelData;
+    // Create the ToggleableInputLayer from the saved Data
+    ImageData inputImage =
+        await layerDB.queryInputImage(savedModelData.inputImageId);
+
+    this.layerList = <Widget>[
+      ToggleableInputLayer(key: UniqueKey(), inputLayerData: inputImage),
+    ];
+
+    // Create the DismissibleListViewItems from the Saved Data
+
+    this.updateElementIndices();
+    this.updateUiFunction?.call();
   }
 }

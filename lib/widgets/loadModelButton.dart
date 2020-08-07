@@ -17,10 +17,14 @@ class LoadModelButton extends StatelessWidget {
       child: FlatButton(
         onPressed: () {
           print("Loading model");
-          Navigator.push(
+          final savedModelData = Navigator.push(
             context,
-            MaterialPageRoute(builder: (ctx) => LoadModelScreen()),
+            MaterialPageRoute(builder: (context) {
+              return LoadModelScreen();
+            }),
           );
+          this.parent.layers.loadLayersFromSavedModelData(
+              savedModelData, this.parent.layerDB);
         },
         child: Text(
           "Load Model",
