@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:imageshapecalculator/constants.dart';
 import 'package:imageshapecalculator/main.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerDB.dart';
 import 'package:imageshapecalculator/screens/newLayerSubScreen.dart';
+import 'package:imageshapecalculator/widgets/LoadModelButton.dart';
+import 'package:imageshapecalculator/widgets/SaveModelButton.dart';
+import 'package:imageshapecalculator/widgets/newLayerButton.dart';
 
 import 'package:provider/provider.dart';
 
@@ -11,10 +13,10 @@ import 'package:imageshapecalculator/models/layers.dart';
 
 class LayerScreen extends StatefulWidget {
   @override
-  _LayerScreenState createState() => _LayerScreenState();
+  LayerScreenState createState() => LayerScreenState();
 }
 
-class _LayerScreenState extends State<LayerScreen> {
+class LayerScreenState extends State<LayerScreen> {
   ScrollController scrollController;
   bool isSubScreenShown = false;
   PersistentBottomSheetController bottomSheet;
@@ -98,9 +100,12 @@ class _LayerScreenState extends State<LayerScreen> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            SaveModelsButton(parent: this, layerDB: layerDB),
+                            LoadModelButton(
+                                layers: this.layers, layerDB: layerDB),
+                            SaveModelButton(
+                                layers: this.layers, layerDB: layerDB),
                             NewLayerButton(parent: this),
                           ],
                         ),
@@ -108,119 +113,6 @@ class _LayerScreenState extends State<LayerScreen> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-//TODO: Auslagern
-class SaveModelsButton extends StatefulWidget {
-  final _LayerScreenState parent;
-  final LayerDB layerDB;
-
-  const SaveModelsButton({
-    Key key,
-    @required this.parent,
-    @required this.layerDB,
-  }) : super(key: key);
-
-  @override
-  _SaveModelsButtonState createState() => _SaveModelsButtonState();
-}
-
-class _SaveModelsButtonState extends State<SaveModelsButton> {
-  TextEditingController textFieldController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    textFieldController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    textFieldController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: LayerScreenBottomButtonBoxDecoration,
-      child: FlatButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext ctx) {
-                return AlertDialog(
-                  title: Text("Do you want to save the Model?"),
-                  content: TextField(
-                    decoration: InputDecoration(hintText: "Name of your Model"),
-                    controller: textFieldController,
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("cancel"),
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text("save"),
-                      onPressed: () {
-                        String modelName = textFieldController.text;
-                        if (modelName == null) {
-                          modelName = "nameless";
-                        }
-                        this
-                            .widget
-                            .layerDB
-                            .saveModel(this.widget.parent.layers, modelName);
-                        Navigator.of(ctx).pop();
-                      },
-                    ),
-                  ],
-                );
-              });
-        },
-        child: Text(
-          "Save Model",
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
-      ),
-    );
-  }
-}
-
-class NewLayerButton extends StatelessWidget {
-  final _LayerScreenState parent;
-
-  const NewLayerButton({Key key, @required this.parent}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: LayerScreenBottomButtonBoxDecoration,
-      margin: EdgeInsets.all(10.0),
-      child: FlatButton(
-        onPressed: () {
-          this.parent.bottomSheet = showBottomSheet(
-            context: context,
-            builder: (context) =>
-                NewLayerSubScreen(updateUiFunction: this.parent.scrollToBottom),
-          );
-          this.parent.setIsSubScreenShown(true);
-          this
-              .parent
-              .bottomSheet
-              .closed
-              .then((value) => this.parent.setIsSubScreenShown(false));
-        },
-        child: Text(
-          "new Layer",
-          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
     );
