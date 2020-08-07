@@ -3,8 +3,8 @@ import 'package:imageshapecalculator/main.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerDB.dart';
 import 'package:imageshapecalculator/screens/newLayerSubScreen.dart';
-import 'package:imageshapecalculator/widgets/LoadModelButton.dart';
-import 'package:imageshapecalculator/widgets/SaveModelButton.dart';
+import 'package:imageshapecalculator/widgets/loadModelButton.dart';
+import 'package:imageshapecalculator/widgets/saveModelButton.dart';
 import 'package:imageshapecalculator/widgets/newLayerButton.dart';
 
 import 'package:provider/provider.dart';
@@ -102,8 +102,7 @@ class LayerScreenState extends State<LayerScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            LoadModelButton(
-                                layers: this.layers, layerDB: layerDB),
+                            LoadModelButton(parent: this),
                             SaveModelButton(
                                 layers: this.layers, layerDB: layerDB),
                             NewLayerButton(parent: this),

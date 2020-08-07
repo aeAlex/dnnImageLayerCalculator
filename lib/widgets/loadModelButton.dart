@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:imageshapecalculator/models/layerDB.dart';
-import 'package:imageshapecalculator/models/layers.dart';
+import 'package:imageshapecalculator/screens/layerScreen.dart';
+import 'package:imageshapecalculator/screens/loadModelScreen.dart';
 
 import '../constants.dart';
 
 class LoadModelButton extends StatelessWidget {
-  final Layers layers;
-  final LayerDB layerDB;
+  final LayerScreenState parent;
 
-  const LoadModelButton({@required this.layers, @required this.layerDB});
+  const LoadModelButton({@required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +17,10 @@ class LoadModelButton extends StatelessWidget {
       child: FlatButton(
         onPressed: () {
           print("Loading model");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (ctx) => LoadModelScreen()),
+          );
         },
         child: Text(
           "Load Model",
