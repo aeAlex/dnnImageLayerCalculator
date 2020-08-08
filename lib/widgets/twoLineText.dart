@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 
 class TwoLineText extends StatelessWidget {
-  final String textAbove;
-  final String textBeneath;
+  final String topText;
+  final String bottomText;
+  final TextStyle topTextStyle;
+  final TextStyle bottomTextStyle;
+  final CrossAxisAlignment crossAxisAlignment;
 
-  const TwoLineText({Key key, this.textAbove, this.textBeneath})
+  const TwoLineText(
+      {Key key,
+      this.topText,
+      this.bottomText,
+      this.topTextStyle,
+      this.bottomTextStyle,
+      this.crossAxisAlignment})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[Text(this.textAbove), Text(this.textBeneath)],
+      crossAxisAlignment: (this.crossAxisAlignment != null)
+          ? this.crossAxisAlignment
+          : CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(this.topText, style: this.topTextStyle),
+        Text(this.bottomText, style: this.bottomTextStyle)
+      ],
     );
   }
 }

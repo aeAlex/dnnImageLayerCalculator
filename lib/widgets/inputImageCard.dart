@@ -40,12 +40,12 @@ class InputImageCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TwoLineText(
-                        textAbove: "Image Size:",
-                        textBeneath:
+                        topText: "Image Size:",
+                        bottomText:
                             "${this.inputLayerData.imageSize.w}x${this.inputLayerData.imageSize.h}"),
                     TwoLineText(
-                        textAbove: "Depth:",
-                        textBeneath: "${this.inputLayerData.depth}"),
+                        topText: "Depth:",
+                        bottomText: "${this.inputLayerData.depth}"),
                   ],
                 ),
               ),

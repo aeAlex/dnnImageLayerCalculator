@@ -27,7 +27,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) => ProviderData(),
-      child: MaterialApp(home: LayerScreen()),
+      child: MaterialApp(
+        home: LayerScreen(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

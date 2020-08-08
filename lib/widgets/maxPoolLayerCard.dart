@@ -67,12 +67,12 @@ class MaxPoolLayerCardState extends State<MaxPoolLayerCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TwoLineText(
-                        textAbove: "Kernel:",
-                        textBeneath:
+                        topText: "Kernel:",
+                        bottomText:
                             "${widget.maxPoolLayerData.kernel.w}x${widget.maxPoolLayerData.kernel.h}"),
                     TwoLineText(
-                        textAbove: "Stride:",
-                        textBeneath:
+                        topText: "Stride:",
+                        bottomText:
                             "${widget.maxPoolLayerData.stride.w}x${widget.maxPoolLayerData.stride.h}"),
                   ],
                 ),

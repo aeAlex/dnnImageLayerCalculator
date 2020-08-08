@@ -67,20 +67,20 @@ class ConvLayerCardState extends State<ConvLayerCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TwoLineText(
-                      textAbove: "Filter:",
-                      textBeneath: "${widget.convLayerData.anzFilter}",
+                      topText: "Filter:",
+                      bottomText: "${widget.convLayerData.anzFilter}",
                     ),
                     TwoLineText(
-                        textAbove: "Kernel:",
-                        textBeneath:
+                        topText: "Kernel:",
+                        bottomText:
                             "${widget.convLayerData.kernel.w}x${widget.convLayerData.kernel.h}"),
                     TwoLineText(
-                        textAbove: "Stride:",
-                        textBeneath:
+                        topText: "Stride:",
+                        bottomText:
                             "${widget.convLayerData.stride.w}x${widget.convLayerData.stride.h}"),
                     TwoLineText(
-                      textAbove: "Padding:",
-                      textBeneath: "${widget.convLayerData.padding}",
+                      topText: "Padding:",
+                      bottomText: "${widget.convLayerData.padding}",
                     ),
                   ],
                 ),
