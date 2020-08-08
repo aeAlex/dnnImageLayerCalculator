@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:imageshapecalculator/main.dart';
 import 'package:imageshapecalculator/models/evaluateLayers.dart';
 import 'package:imageshapecalculator/models/layerData.dart';
 import 'package:imageshapecalculator/models/layers.dart';
 import 'package:provider/provider.dart';
+
+import 'getDeleteIcon.dart';
 
 class DismissableListViewItem extends StatefulWidget {
   final Widget child;
@@ -60,30 +61,14 @@ class _DismissableListViewItemState extends State<DismissableListViewItem> {
             this.widget.onCopy(this.widget.index, widget);
           },
           child: (this.isExpanded) ? widget.expandedChild : widget.child),
-      background:
-          getDeleteIcon(MainAxisAlignment.start, EdgeInsets.only(left: 20.0)),
-      secondaryBackground:
-          getDeleteIcon(MainAxisAlignment.end, EdgeInsets.only(right: 20.0)),
+      background: getDeleteIcon(
+          MainAxisAlignment.start, EdgeInsets.only(left: 20.0), 50),
+      secondaryBackground: getDeleteIcon(
+          MainAxisAlignment.end, EdgeInsets.only(right: 20.0), 50),
       key: UniqueKey(),
       onDismissed: (DismissDirection direction) =>
           this.widget.onDismissed(this.widget.index),
       direction: DismissDirection.horizontal,
-    );
-  }
-
-  Container getDeleteIcon(
-      MainAxisAlignment mainAxisAlignment, EdgeInsets edgeInsets) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: mainAxisAlignment,
-        children: <Widget>[
-          FaIcon(
-            FontAwesomeIcons.trash,
-            size: 50,
-          ),
-        ],
-      ),
-      padding: edgeInsets,
     );
   }
 }
