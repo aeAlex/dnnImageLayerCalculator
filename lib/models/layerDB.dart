@@ -247,6 +247,43 @@ class LayerDB {
 
     return layerDataList;
   }
+
+  void deleteModel(SavedModelData savedModelData) async {
+    Database db = await this.futureDB;
+    // deleting the associated tuples with their Rectangles
+    deleteLayerWithRectanglesFromId(savedModelData.modelId);
+    deleteImageWithRectanglesFromId(savedModelData.inputImageId);
+
+    print(await db.delete("model",
+        where: "model_id = ?", whereArgs: [savedModelData.modelId]));
+  }
+
+  void deleteLayerWithRectanglesFromId(int modeId) async {
+    Database db = await this.futureDB;
+    // Deleting the rectangles
+    List<Map<String, dynamic>> result = await db.rawQuery(
+        "SELECT kernel_id, stride_id FROM layer WHERE model_id = ?", [modeId]);
+    for (var map in result) {
+      db.delete('rectangle',
+          where: "rectangle_id IN (?, ?)",
+          whereArgs: [map['kernel_id'], map['stride_id']]);
+    }
+    // Deleting the Layers
+    db.delete("layer", where: "model_id = ?", whereArgs: [modeId]);
+  }
+
+  void deleteImageWithRectanglesFromId(int imageId) async {
+    Database db = await this.futureDB;
+    // Deleting the Rectangles
+    List<Map<String, dynamic>> result = await db.rawQuery(
+        "SELECT imageSize_id FROM image WHERE image_id = ?", [imageId]);
+    if (result.length != 1) throw ("did not find a image or to many to delete");
+    var map = result[0];
+    db.delete("rectangle",
+        where: "rectangle_id = ?", whereArgs: [map['imageSize_id']]);
+    // Deleting the Image
+    db.delete("image", where: "image_id = ?", whereArgs: [imageId]);
+  }
 }
 
 LayerType getLayerTypeFromId(int id) {

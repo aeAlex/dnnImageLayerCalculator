@@ -13,11 +13,12 @@ class LoadModelScreen extends StatefulWidget {
 
 class _LoadModelScreenState extends State<LoadModelScreen> {
   List<Widget> lvItems;
+  LayerDB layerDB;
 
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    LayerDB layerDB = providerData.layerDB;
+    layerDB = providerData.layerDB;
 
     createLvItems(layerDB);
 
@@ -60,6 +61,7 @@ class _LoadModelScreenState extends State<LoadModelScreen> {
       setState(() {
         this.lvItems.remove(modelSelectionCard);
       });
+      layerDB.deleteModel(modelSelectionCard.savedModelData);
     }
   }
 }
