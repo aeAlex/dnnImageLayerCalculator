@@ -16,7 +16,6 @@ class LoadModelButton extends StatelessWidget {
       margin: EdgeInsets.all(10.0),
       child: FlatButton(
         onPressed: () {
-          print("Loading model");
           final savedModelData = Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {

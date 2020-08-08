@@ -73,9 +73,12 @@ class Layers {
   }
 
   void dismissElement(int index) {
+    print("dismissing... ${this.layerList.length} Element present");
     this.layerList.removeAt(index);
+    this.updateUiFunction();
     updateElementIndices();
     evaluateLayers(this);
+    print("finished dissmissing ${this.layerList.length} Element present");
   }
 
   void copyElement(index, DismissableListViewItem item) {
@@ -109,6 +112,7 @@ class Layers {
       Future futureSavedModelData, LayerDB layerDB) async {
     SavedModelData savedModelData = await futureSavedModelData;
     // Create the ToggleableInputLayer from the saved Data
+    if (savedModelData == null) return;
     ImageData inputImage =
         await layerDB.queryInputImageFromId(savedModelData.inputImageId);
 
@@ -120,11 +124,8 @@ class Layers {
     List<LayerData> layerDataList =
         await layerDB.queryLayerDataFromId(savedModelData.modelId);
 
-    print("test, ${layerDataList.length}");
     layerDataList.forEach((LayerData layerData) {
-      print("adding Layer");
       if (layerData is ConvolutionalLayerData) {
-        print("add Conv Layer");
         _addConvolutionalLayer(layerData);
       } else if (layerData is MaxPoolingLayerData) {
         _addMaxPoolLayer(layerData);

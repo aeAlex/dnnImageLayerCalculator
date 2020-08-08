@@ -103,8 +103,6 @@ class LayerDB {
         throw ("Not a DissmissableListViewItem");
       }
     }
-
-    final List<Map<String, dynamic>> maps = await db.query('layer');
   }
 
   Future<List<SavedModelData>> queryModelDataList() async {
