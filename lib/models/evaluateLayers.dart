@@ -7,7 +7,6 @@ import 'package:imageshapecalculator/widgets/maxPoolLayerCard.dart';
 import 'package:imageshapecalculator/widgets/toggleableInputLayer.dart';
 
 void evaluateLayers(Layers layers) {
-  print("evaluate");
   ToggleableInputLayer inputLayer = layers.layerList[0] as ToggleableInputLayer;
   ImageData imageData = inputLayer.inputLayerData;
 

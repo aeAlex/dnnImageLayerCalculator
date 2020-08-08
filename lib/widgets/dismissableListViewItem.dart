@@ -47,7 +47,6 @@ class _DismissableListViewItemState extends State<DismissableListViewItem> {
     return Dismissible(
       child: GestureDetector(
           onTap: () {
-            print("tapped");
             setState(() {
               this.isExpanded = !this.isExpanded;
             });

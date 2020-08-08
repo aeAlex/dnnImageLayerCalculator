@@ -73,29 +73,24 @@ class Layers {
   }
 
   void dismissElement(int index) {
-    print("dismissing... ${this.layerList.length} Element present");
     this.layerList.removeAt(index);
     this.updateUiFunction();
     updateElementIndices();
     evaluateLayers(this);
-    print("finished dissmissing ${this.layerList.length} Element present");
   }
 
   void copyElement(index, DismissableListViewItem item) {
     // copy the Element:
-    print("Copying Layer");
     DismissableListViewItem newItem = item.layerData.copyLayer(this);
     this.layerList.insert(index + 1, newItem);
     updateElementIndices();
-    if (this.updateUiFunction == null) print("Update UI Function was null");
     evaluateLayers(this);
     this.updateUiFunction?.call();
   }
 
   void reorderElements(int oldIndex, int newIndex) {
-    // abrechen wenn der Input layer verschiebt werden soll
+    // cancel if the input layer is to be moved
     if (oldIndex == 0 || newIndex == 0) return;
-    // wurde oberhalb der alten Position positioniert
     Widget oldElement = this.layerList.removeAt(oldIndex);
     if (newIndex < oldIndex) {
       this.layerList.insert(newIndex, oldElement);

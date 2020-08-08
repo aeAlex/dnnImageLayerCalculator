@@ -57,6 +57,4 @@ class MaxPoolingLayerData extends LayerData {
   Map<String, dynamic> toMap() {
     return {'kernel': this.kernel, 'stride': this.stride};
   }
-
-  // TODO: Implement that the default values are the of the last same layer
 }

@@ -60,7 +60,7 @@ class LayerScreenState extends State<LayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Geting the Layers from the Provider:
+    // Getting the Layers from the Provider:
     ProviderData providerData = Provider.of<ProviderData>(context);
     this.layerDB = providerData.layerDB;
     this.layers = providerData.layers;

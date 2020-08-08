@@ -42,8 +42,6 @@ class NewLayerSubScreen extends StatelessWidget {
             layerName: "Convolutional",
             color: ConvLayerCard.color,
             onSelected: () {
-              print("Convolution-Layer was added");
-
               LayerData convLayerData = ConvolutionalLayerData(
                 anzFilter: 64,
                 kernel: Rectangle(w: 3, h: 3),
