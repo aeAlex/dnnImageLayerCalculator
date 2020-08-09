@@ -22,7 +22,7 @@ class _LoadModelScreenState extends State<LoadModelScreen> {
 
     createLvItems(layerDB);
 
-    return (this.lvItems != null)
+    return (this.lvItems != null && this.lvItems.length > 0)
         ? Scaffold(
             body: SafeArea(
               child: Column(
@@ -38,7 +38,16 @@ class _LoadModelScreenState extends State<LoadModelScreen> {
               ),
             ),
           )
-        : Container();
+        : Scaffold(
+            body: Center(
+              child: Container(
+                child: Text(
+                  "There are no saved Models",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+            ),
+          );
   }
 
   void createLvItems(LayerDB layerDB) async {
