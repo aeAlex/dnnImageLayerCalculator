@@ -7,14 +7,16 @@ class LabeledVectorInputField extends StatefulWidget {
   final String rightInitialValue;
   final Function onLeftChanged;
   final Function onRightChanged;
+  final Color color;
 
-  const LabeledVectorInputField({
+  LabeledVectorInputField({
     Key key,
     @required this.label,
     @required this.leftInitialValue,
     @required this.rightInitialValue,
     @required this.onLeftChanged,
     @required this.onRightChanged,
+    this.color = const Color(0xFFFF80A0),
   }) : super(key: key);
 
   @override
@@ -45,7 +47,7 @@ class _LabeledVectorInputFieldState extends State<LabeledVectorInputField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.pinkAccent[100],
+        color: this.widget.color,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Row(

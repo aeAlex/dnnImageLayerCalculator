@@ -5,12 +5,14 @@ class LabeledInputField extends StatefulWidget {
   final String label;
   final String initialValue;
   final Function onChanged;
+  final Color color;
 
   const LabeledInputField({
     Key key,
     @required this.label,
     this.initialValue,
     @required this.onChanged,
+    this.color = const Color(0xFFFF80A0),
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class _LabeledInputFieldState extends State<LabeledInputField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.pinkAccent[100],
+        color: this.widget.color,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Row(

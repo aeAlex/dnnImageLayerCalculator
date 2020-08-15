@@ -51,6 +51,7 @@ class ExpandedMaxPoolLayerCard extends StatelessWidget {
                       onRightChanged: (value) {
                         this.maxPoolLayerData.kernel.h = int.parse(value);
                       },
+                      color: Color(0xFF12A2D6),
                     ),
                     LabeledVectorInputField(
                       label: "Stride: ",
@@ -64,6 +65,7 @@ class ExpandedMaxPoolLayerCard extends StatelessWidget {
                       onRightChanged: (value) {
                         this.maxPoolLayerData.stride.h = int.parse(value);
                       },
+                      color: Color(0xFF12A2D6),
                     ),
                   ],
                 ),

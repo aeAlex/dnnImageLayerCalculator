@@ -48,6 +48,7 @@ class ExpandedInputImageCard extends StatelessWidget {
                       onRightChanged: (value) {
                         this.inputLayerData.imageSize.h = int.parse(value);
                       },
+                      color: Color(0xFFFCB25B),
                     ),
                     LabeledInputField(
                       label: "Depth: ",
@@ -55,6 +56,7 @@ class ExpandedInputImageCard extends StatelessWidget {
                       onChanged: (value) {
                         this.inputLayerData.depth = int.parse(value);
                       },
+                      color: Color(0xFFFCB25B),
                     ),
                   ],
                 ),
