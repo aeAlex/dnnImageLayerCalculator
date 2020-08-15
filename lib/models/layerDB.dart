@@ -73,7 +73,6 @@ class LayerDB {
 
   void saveModel(Layers layers, String name) async {
     Database db = await this.futureDB;
-    print("Saving Model");
 
     int modelId = await this._createModelAndInputImage(layers, name);
 
@@ -254,8 +253,11 @@ class LayerDB {
     deleteLayerWithRectanglesFromId(savedModelData.modelId);
     deleteImageWithRectanglesFromId(savedModelData.inputImageId);
 
-    print(await db.delete("model",
-        where: "model_id = ?", whereArgs: [savedModelData.modelId]));
+    db.delete(
+      "model",
+      where: "model_id = ?",
+      whereArgs: [savedModelData.modelId],
+    );
   }
 
   void deleteLayerWithRectanglesFromId(int modeId) async {

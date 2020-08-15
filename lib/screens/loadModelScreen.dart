@@ -56,7 +56,7 @@ class _LoadModelScreenState extends State<LoadModelScreen> {
           await layerDB.queryModelDataList();
       List<Widget> localLvItems = <Widget>[];
       savedModelDataList.forEach((SavedModelData savedModelData) {
-        localLvItems.add(ModelSelectionCard(
+        localLvItems.add(DismissibleModelSelectionCard(
             savedModelData: savedModelData, onDissmissed: this.deleteModel));
       });
       setState(() {
@@ -65,7 +65,7 @@ class _LoadModelScreenState extends State<LoadModelScreen> {
     }
   }
 
-  void deleteModel(ModelSelectionCard modelSelectionCard) {
+  void deleteModel(DismissibleModelSelectionCard modelSelectionCard) {
     if (this.lvItems.contains(modelSelectionCard)) {
       setState(() {
         this.lvItems.remove(modelSelectionCard);
@@ -75,14 +75,14 @@ class _LoadModelScreenState extends State<LoadModelScreen> {
   }
 }
 
-class ModelSelectionCard extends StatelessWidget {
+class DismissibleModelSelectionCard extends StatelessWidget {
   static const TextStyle bodyTextStyle =
       TextStyle(fontWeight: FontWeight.w400, fontSize: 16);
 
   final SavedModelData savedModelData;
   final Function onDissmissed;
 
-  const ModelSelectionCard(
+  const DismissibleModelSelectionCard(
       {Key key, @required this.savedModelData, @required this.onDissmissed})
       : super(key: key);
 
@@ -105,7 +105,7 @@ class ModelSelectionCard extends StatelessWidget {
                     children: <Widget>[
                       Text("Layer Name:"),
                       Text(this.savedModelData.name,
-                          style: ModelSelectionCard.bodyTextStyle),
+                          style: DismissibleModelSelectionCard.bodyTextStyle),
                     ],
                   ),
                 ),
@@ -116,7 +116,7 @@ class ModelSelectionCard extends StatelessWidget {
                     children: <Widget>[
                       Text("Creation Time:"),
                       Text(this.savedModelData.creationTimeString,
-                          style: ModelSelectionCard.bodyTextStyle),
+                          style: DismissibleModelSelectionCard.bodyTextStyle),
                     ],
                   ),
                 ),
